@@ -1,1 +1,0 @@
-angular, express, python, mongodb
