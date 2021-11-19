@@ -7,6 +7,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { NavComponent } from './layout/nav/nav.component';
 import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component'
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
