@@ -10,6 +10,7 @@ export class RegisterComponent implements OnInit {
   faUser = faUser;
   faEnvelope = faEnvelope;
   faLock = faLock;
+  
   constructor() { }
   
   ngOnInit(): void {

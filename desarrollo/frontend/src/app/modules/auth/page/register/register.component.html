@@ -1,6 +1,5 @@
-<form action="" class="formulario">
-        
-    <h1>Inscribete y comienza a aprender</h1>
+<form action="" class="formulario"> 
+    <h1>Inscríbete y comienza a aprender</h1>
     <hr/>
         <div class="contenedor">
             <div class="input-contenedor">
@@ -13,15 +12,13 @@
             </div>
             <div class="input-contenedor">
                 <fa-icon [icon]="faLock" class="icon"></fa-icon>
-                <input type="text" placeholder="Contraseña">
+                <input type="password" placeholder="Contraseña">
             </div>
 
-            <input type="submit" value="Registrate" class="button">
+            <input type="submit" value="Registrarse" class="button">
 
-            <p>¿Ya tienes cuenta?   <a class="link" href="../login/login.component.html">Iniciar sesión</a></p>
-        </div>
-        
-        
+            <p>¿Ya tienes cuenta?<a class="link" routerLink="/login"> Inicia sesión</a></p>
+        </div>     
 </form>
 
 
