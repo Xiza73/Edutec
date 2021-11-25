@@ -1,9 +1,16 @@
 import { model, Schema, Document } from 'mongoose'
 import bcrypt from 'bcrypt'
+import { IRole } from './Role';
+import { IClient } from './Client';
+import { IAdmin } from './Admin';
+const { ObjectId } = Schema.Types
 
 export interface IUser extends Document {
+    _id: string,
     username: string,
     password: string,
+    role: IRole,
+    person: IClient | IAdmin,
     comparePassword: (password: string) => Promise<boolean>
 }
 
@@ -17,6 +24,21 @@ const User = new Schema({
     password: {
         type: String,
         required: true
+    },
+    person: {
+        type: ObjectId,
+        refPath: 'onPerson',
+        required: true
+    },
+    role: {
+        type: ObjectId,
+        ref: 'Role',
+        required: true
+    },
+    onPerson: {
+        type: String,
+        required: true,
+        enum: ['Client', 'Admin']
     }
 }, { timestamps: true });
 
