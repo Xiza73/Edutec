@@ -16,7 +16,7 @@ h1 {
     padding-bottom: 5px;
 }
 input[type="text"], input[type="email"], input[type="password"] {
-    font-size: 20px;
+    font-size: 18px;
     width: 85%;
     padding: 10px;
     border: none;
@@ -26,7 +26,7 @@ input[type="text"], input[type="email"], input[type="password"] {
 .input-contenedor {
     margin-bottom: 15px;
     border: 1px solid #aaa;
-    padding: 10px 1px;
+    padding: 6px 1px;
 }
 .icon {
     min-width: 50px;
@@ -37,10 +37,10 @@ input[type="text"], input[type="email"], input[type="password"] {
 .button {
     border: none;
     width: 100%;
-    font-size: 20px;
+    font-size: 18px;
     color: white;
     background: #1a2537;
-    padding: 20px;
+    padding: 18px;
     margin-top: 5px;
     // border-radius: 5px;
     cursor: pointer;
@@ -63,7 +63,7 @@ p {
 @media(min-width:768px) {
     .formulario{
         margin: auto;
-        width: 500px;
+        width: 450px;
         margin-top: 20px;
         border-radius: 2%;
     }
