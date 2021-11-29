@@ -1,30 +1,48 @@
-<form class="formulario" [formGroup]="form"> 
-    <h1 class="h2">Iniciar sesión</h1>
-    <hr/>
-    <div class="contenedor">
-        <div class="input-contenedor rounded">
-            <fa-icon [icon]="faEnvelope" class="icon"></fa-icon>
-            <input type="email" 
-                   placeholder="Correo"
-                   formControlName="email">
-            <br>
-        </div>
-        <div class="input-contenedor rounded">
-            <fa-icon [icon]="faLock" class="icon"></fa-icon>
-            <input type="password" 
-                   placeholder="Contraseña"
-                   formControlName="password">
-        </div>
+<form class="formulario" [formGroup]="form">
+  <h1 class="h2">Iniciar sesión</h1>
+  <hr/>
 
-        <input (click)="login()" 
-               [disabled]="form.pending || form.invalid"
-               type="submit" 
-               value="Iniciar sesión" 
-               class="button rounded">
+  <div class="contenedor">
 
-        <p>¿No tienes una cuenta?<a class="link" routerLink="/register"> Regístrate</a></p>
-    </div>     
+    <div class="input-contenedor rounded">
+      <fa-icon [icon]="faEnvelope" class="icon"></fa-icon>
+      <input type="email" 
+             placeholder="Correo electrónico" 
+             formControlName="email"
+             [maxlength]="50"/>
+    </div>
+    <div *ngIf="isRequiredField('email')"
+         class="text-start text-danger fw-bold mt-1 error">
+      Correo electrónico requerido
+    </div>
+    <div *ngIf="isValidEmail()"
+         class="text-start text-danger fw-bold mt-1 error">
+      Ingrese un correo válido
+    </div>
+    <div *ngIf="isMaxLengthExceeded('email')"
+         class="text-start text-danger fw-bold mt-1 error">
+      No se debe exceder los 50 caracteres
+    </div>
+
+    <div class="input-contenedor rounded">
+      <fa-icon [icon]="faLock" class="icon"></fa-icon>
+      <input type="password"
+             placeholder="Contraseña"
+             formControlName="password"/>
+    </div>
+    <div *ngIf="isRequiredField('password')"
+         class="text-start text-danger fw-bold mt-1 error">
+      Contraseña requerida
+    </div>
+
+    <input (click)="login()"
+           type="submit"
+           value="Iniciar sesión"
+           class="button rounded"/>
+
+    <p>
+      ¿No tienes una cuenta?<a class="link" routerLink="/register"> Regístrate</a>
+    </p>
+
+  </div>
 </form>
-
-
-
