@@ -8,6 +8,7 @@ import { faBook } from '@fortawesome/free-solid-svg-icons';
 })
 export class HomeComponent implements OnInit {
   faBook = faBook;
+  public courses: any[] = [1, 2, 3, 4];
 
   constructor() { }
 
