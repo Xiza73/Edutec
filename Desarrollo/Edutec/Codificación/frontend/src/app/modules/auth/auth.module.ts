@@ -7,13 +7,15 @@ import { RegisterComponent } from './page/register/register.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordRecoveryComponent } from './page/password-recovery/password-recovery.component';
+import { NewPasswordComponent } from './page/new-password/new-password.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
-    PasswordRecoveryComponent
+    PasswordRecoveryComponent,
+    NewPasswordComponent
   ],
   imports: [
     CommonModule,
