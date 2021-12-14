@@ -122,6 +122,7 @@ export class AuthDAO {
       return new ErrorHandler(400, "Error al registrar usuario");
     }
   };
+  
   public async logout() {
     try {
       return new ResponseBase(200, "Adiós");

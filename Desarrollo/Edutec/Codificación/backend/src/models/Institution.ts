@@ -4,6 +4,7 @@ export interface IInstitution extends Document {
     _id: string,
     name: string,
     description: string,
+    url: string,
     score: number,
     votes: number
 }
@@ -17,15 +18,19 @@ const Institution = new Schema({
     },
     description: {
         type: String,
-        required: false
+        required: true
+    },
+    url: {
+        type: String,
+        required: true
     },
     score: {
         type: Number,
-        required: true //init 0
+        required: false //init 0
     },
     votes: {
         type: Number,
-        required: true //init 0
+        required: false //init 0
     }
 }, { timestamps: true });
 

@@ -5,29 +5,37 @@ const { ObjectId } = Schema.Types
 
 export interface ICourse extends Document {
     _id: string,
-    name: string,
     institution: IInstitution,
+    name: string,
     description: string,
+    image: string,
     price: number,
     currency: string,
-    shedule: ISchedule[],
+    start: string,
+    duration: string,
+    schedule: string,
+    url: string,
     score: number,
     votes: number
 }
 
 const Course = new Schema({
+    institution: {
+        type: ObjectId,
+        ref: 'Institution',
+        required: true
+    },
     name: {
         type: String,
         unique: false,
         required: true,
         trim: true
     },
-    institution: {
-        type: ObjectId,
-        ref: 'Institution',
-        required: true
-    },
     description: {
+        type: String,
+        required: false
+    },
+    image: {
         type: String,
         required: false
     },
@@ -39,18 +47,29 @@ const Course = new Schema({
         type: String,
         required: true,
     },
-    schedule: [{
-        type: ObjectId,
-        ref: 'Schedule',
+    start: {
+        type: Date,
         required: true
-    }],
+    },
+    duration: {
+        type: String,
+        required: false
+    },
+    schedule: {
+        type: String,
+        required: false
+    },
+    url: {
+        type: String,
+        required: true
+    },
     score: {
         type: Number,
-        required: true //init 0
+        required: false //init 0
     },
     votes: {
         type: Number,
-        required: true //init 0
+        required: false //init 0
     }
 }, { timestamps: true });
 

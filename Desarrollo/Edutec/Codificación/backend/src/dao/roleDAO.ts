@@ -21,7 +21,7 @@ export class RoleDAO {
       const data = await Role.find();
       return new ResponseData(200, 'Roles obtenidos correctamente', data);
     } catch (err) {
-      return new ErrorHandler(404, 'Error al obtener roles')
+      return new ErrorHandler(404, 'Error al obtener roles');
     }
   };
 }

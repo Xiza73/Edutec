@@ -1,7 +1,7 @@
 import { RoleDAO } from '../dao/roleDAO';
 
 export class RoleService {
-    private roleDAO: RoleDAO;
+  private roleDAO: RoleDAO;
 
   constructor() {
     this.roleDAO = new RoleDAO();
@@ -12,6 +12,6 @@ export class RoleService {
   };
 
   public readRoles = async () => {
-      return await this.roleDAO.readRoles()
+    return await this.roleDAO.readRoles()
   };
 }
