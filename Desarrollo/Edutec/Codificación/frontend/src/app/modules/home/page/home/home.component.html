@@ -38,7 +38,7 @@
     </div>
     <div class="d-flex justify-content-between align-items-center flex-wrap pt-4">
       <div *ngFor="let item of courses">
-        <app-course-box></app-course-box>
+        <app-course-box [course]="item"></app-course-box>
       </div>
     </div>
   </div>

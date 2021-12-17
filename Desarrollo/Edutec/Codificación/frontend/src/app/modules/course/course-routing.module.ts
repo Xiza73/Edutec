@@ -12,7 +12,7 @@ const routes: Routes = [
         component: CourseSearchComponent
       },
       {
-        path: 'detalle',
+        path: 'detalle/:id',
         component: CourseDetailComponent
       }
     ]

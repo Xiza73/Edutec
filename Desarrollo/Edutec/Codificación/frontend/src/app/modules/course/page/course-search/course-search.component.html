@@ -63,7 +63,9 @@
     <div class="col-12">
   
       <div *ngFor="let course of coursesToShow">
-        <app-course-search-item [course]="course"></app-course-search-item>
+        <app-course-search-item [routerLink]="['/cursos/detalle', course._id]"
+                                [course]="course">
+        </app-course-search-item>
       </div>
   
     </div>

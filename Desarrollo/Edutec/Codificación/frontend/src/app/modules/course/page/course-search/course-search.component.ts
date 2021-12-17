@@ -31,7 +31,7 @@ export class CourseSearchComponent implements OnInit {
 
   // Pagination
   coursesToShow: any[] = [];
-  pageSize: number = 10;
+  pageSize: number = 2;
   currentPage: number = 1;
   numberPages: number = 0;
 

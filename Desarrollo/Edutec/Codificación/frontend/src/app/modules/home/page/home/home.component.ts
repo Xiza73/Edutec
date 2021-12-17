@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr';
+import { CourseService } from 'src/app/data/services/course.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,7 @@ import { faBook } from '@fortawesome/free-solid-svg-icons';
 })
 export class HomeComponent implements OnInit {
   faBook = faBook;
-  public courses: any[] = [1, 2, 3, 4];
+  courses: any[] = [];
 
   // Form
   form: FormGroup = this.fb.group({
@@ -19,10 +21,20 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private courseService: CourseService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
+    this.courseService.readCourses('', 'start', '-1').subscribe(
+      response => {
+        this.courses = response.data.slice(0, 4);
+      },
+      err => {
+        this.toastr.error(err.error.message, 'Error');
+      }
+    )
   }
 
   findCourse(): void {

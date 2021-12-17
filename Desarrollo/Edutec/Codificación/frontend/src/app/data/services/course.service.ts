@@ -23,6 +23,10 @@ export class CourseService {
     return this.httpClient.get(this.apiUrl + '/course', {params});
   }
 
+  public readCourse(id: string): Observable<any> {
+    return this.httpClient.get(this.apiUrl + `/course/${id}`);
+  }
+
   public setCourses(courses: any[]) {
     this.courses = courses;
   }
