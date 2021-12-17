@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
-import { ToastrService } from 'ngx-toastr';
-import { SearchService } from 'src/app/core/services/search.service';
 
 @Component({
   selector: 'app-home',
@@ -21,9 +19,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private searchService: SearchService,
-    private toastr: ToastrService,
-    private router: Router,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -31,16 +27,12 @@ export class HomeComponent implements OnInit {
 
   findCourse(): void {
     const { name } = this.form.value;
-    this.searchService.searchCourses(name).subscribe(
-      response => {
-        this.searchService.setCourses(response.data);
-        this.router.navigate(['cursos/busqueda']);
-      },
-      err => {
-        this.toastr.error(err.error.message, 'Error');
-        this.form.reset();
-      }
-    );
+    
+    this.router.navigate(['cursos/busqueda'], {queryParams: {
+      'course': name, 
+      'option': 1
+    }});
   }
-
 }
+
+

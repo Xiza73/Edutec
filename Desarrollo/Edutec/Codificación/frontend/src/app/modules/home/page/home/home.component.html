@@ -14,7 +14,7 @@
       <fa-icon [icon]="faBook"></fa-icon>
       <span class="px-1"> Nombre del curso </span>
     </p>
-    <form [formGroup]="form">
+    <form [formGroup]="form" (submit)="findCourse()" >
       <div class="form-group d-flex border rounded p-2">
         <input
           formControlName="name"
@@ -22,7 +22,7 @@
           class="form-control"
           placeholder="Curso, categoría o palabra clave"
         />
-        <button (click)="findCourse()" 
+        <button type="submit"
                 class="btn btn-primary">
           Buscar
         </button>

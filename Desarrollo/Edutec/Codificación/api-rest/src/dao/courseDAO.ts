@@ -62,13 +62,13 @@ export class CourseDAO {
     }
   };
 
-  public readCourses = async (name: string, field: string, order: number) => {
+  public readCourses = async (name: string, field: string, sort: number) => {
     try {
       let data;
       if (name) {
-        data = await Course.find({ name: {$regex: new RegExp(name, 'i')} }).sort({field: order}).exec();
+        data = await Course.find({ name: {$regex: new RegExp(name, 'i')} }).sort([[field, sort]]).exec();
       } else {
-        data = await Course.find().sort({field: order}).exec();
+        data = await Course.find().sort([[field, sort]]).exec();
       }
       return new ResponseData(200, "Cursos obtenidos correctamente", data);
     } catch (error) {
