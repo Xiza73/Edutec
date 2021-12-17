@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-course-detail',
@@ -6,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./course-detail.component.scss']
 })
 export class CourseDetailComponent implements OnInit {
+  // Icons
+  public faHeart = faHeart;
+  public active = false;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  public addDeleteFavorite() {
+    this.active = !this.active
   }
 
 }
