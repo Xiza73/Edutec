@@ -1,3 +1,51 @@
-<div class="row">
-  <img src="./assets/images/course.jpg" alt="Imagen del curso" class="rounded">
+<div class="details-container">
+  <div class="img-course">
+    <div class="img"></div>
+  </div>
+  <div class="data-course">
+    <h1>Nombre del Curso</h1>
+    <p><b>Brindado por: </b>Universidad Nacional Mayor de San Marcos</p>
+    <p><b>Fecha de Inicio: </b>22/02/22</p>
+    <p><b>Duración: </b>22 meses</p>
+    <p><b>Horario: </b>Lunes - Viernes 8:00am - 12:00pm</p>
+    <p><b>Instructores: </b>Mariñosgod</p>
+    <p><b>Lugar: </b>Ciudad universitaria</p>
+    <p class="price"><b>Precio: </b>S/ 129.99</p>
+    <div class="buy">
+      <fa-icon
+        [icon]="faHeart"
+        [className]="active ? 'icon active_heart' : 'icon heart'"
+        (click)="addDeleteFavorite()"
+      ></fa-icon>
+      <p (click)="addDeleteFavorite()">Añadir a favoritos</p>
+      <button class="btn btn-warning">Comprar</button>
+    </div>
+  </div>
+  <div class="details-course">
+    <h1>Detalles del Curso</h1>
+    <h2>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti id amet
+      ipsa non eius, numquam minus voluptate cum quos perferendis.
+    </h2>
+    <p>
+      1) Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
+      tempora.
+    </p>
+    <p>
+      2) Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
+      tempora.
+    </p>
+    <p>
+      3) Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
+      tempora.
+    </p>
+    <p>
+      4) Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
+      tempora.
+    </p>
+    <p>
+      5) Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
+      tempora.
+    </p>
+  </div>
 </div>
