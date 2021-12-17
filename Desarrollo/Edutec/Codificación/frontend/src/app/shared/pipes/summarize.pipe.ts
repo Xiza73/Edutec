@@ -5,9 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SummarizePipe implements PipeTransform {
 
-  transform(value: string): string {
-    if (value.length > 150) {
-      return value.slice(0, 150) + '...';
+  transform(value: string, size: number = 150): string {
+    if (value.length > size) {
+      return value.slice(0, size) + '...';
     }
     return value;
   }

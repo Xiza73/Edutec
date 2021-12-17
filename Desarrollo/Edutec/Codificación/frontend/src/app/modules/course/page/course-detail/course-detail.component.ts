@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { CourseService } from 'src/app/data/services/course.service';
@@ -20,6 +20,8 @@ export class CourseDetailComponent implements OnInit {
   courseId: string = '';
   course: any = {};
   institution: any = {};
+
+  courses: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -43,7 +45,16 @@ export class CourseDetailComponent implements OnInit {
         err => {
           this.toastr.error(err.error.message, 'Error');
         }
-      )
+      );
+    
+    this.courseService.readCourses('', 'start', '-1').subscribe(
+      response => {
+        this.courses = response.data.slice(2, 7);
+      },
+      err => {
+        this.toastr.error(err.error.message, 'Error');
+      }
+    );
   }
 
   public addDeleteFavorite() {

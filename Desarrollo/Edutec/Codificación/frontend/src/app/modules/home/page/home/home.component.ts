@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
       err => {
         this.toastr.error(err.error.message, 'Error');
       }
-    )
+    );
   }
 
   findCourse(): void {

@@ -32,7 +32,26 @@
   <div class="row course-description">
     <div class="col-12">
       <h1>Descripción</h1>
-      <p class="text-justify">{{ course.description }}</p>
+      <p *ngIf="course.description !== ''"
+         class="text-justify">
+         {{ course.description }}
+      </p>
+      <p *ngIf="course.description === ''"
+          class="text-justify text-danger fw-bold">
+          No se encontró una descripción.
+      </p>
     </div>
   </div>
+
+  <!-- <div class="row recommended-courses">
+    <div class="col-12">
+      <h1>Otros cursos que te pueden interesar</h1>
+      <div class="d-flex justify-content-between align-items-center flex-wrap pt-4">
+        <div *ngFor="let item of courses">
+          <app-course-box [course]="item">
+          </app-course-box>
+        </div>
+      </div>
+    </div>
+  </div> -->
 </div>
