@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
   form: FormGroup = this.fb.group({
     username: ['', [ Validators.required, Validators.maxLength(50) ]],
     email   : ['', [ Validators.required, Validators.email, Validators.maxLength(50) ]],
-    password: ['', [ Validators.required ]]
+    password: ['', [ Validators.required, Validators.minLength(8) ]]
   });
 
   constructor(
@@ -67,6 +67,11 @@ export class RegisterComponent implements OnInit {
   isMaxLengthExceeded(field: string): boolean {
     const formControl = this.form.get(field);
     return formControl?.errors?.maxlength && formControl?.touched; 
+  }
+
+  isMinLengthInvalid(field: string): boolean {
+    const formControl = this.form.get(field);
+    return formControl?.errors?.minlength && formControl?.touched;
   }
 
 }
