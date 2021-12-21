@@ -38,16 +38,16 @@ input[type="text"], input[type="email"], input[type="password"] {
 .button {
     border: none;
     width: 100%;
-    color: white;
-    background: #1a2537;
+    // color: white;
+    // background: #1a2537;
     padding: 18px;
     margin-top: 15px;
     // border-radius: 5px;
     cursor: pointer;
 }
-.button:hover {
-    background: cadetblue;
-}
+// .button:hover {
+//     background: cadetblue;
+// }
 .button:disabled {
     background: grey;
 }

@@ -28,20 +28,25 @@
       <fa-icon [icon]="faLock" class="icon"></fa-icon>
       <input type="password"
              placeholder="Contraseña"
-             formControlName="password"/>
+             formControlName="password"
+             [maxlength]="20"/>
     </div>
     <div *ngIf="isRequiredField('password')"
          class="text-start text-danger fw-bold mt-1 error">
       Contraseña requerida
     </div>
-    <a class="link" routerLink="/password-recovery"> ¿Olvidaste tu Contraseña?</a>
+    <div *ngIf="isMaxLengthExceeded('password')"
+         class="text-start text-danger fw-bold mt-1 error">
+      No se debe exceder los 20 caracteres
+    </div>
+    <a class="breadcrumb-item" routerLink="/password-recovery"> ¿Olvidaste tu Contraseña?</a>
     <input (click)="login()"
            type="submit"
            value="Iniciar sesión"
-           class="button rounded"/>
+           class="button rounded btn btn-primary"/>
 
     <p>
-      ¿No tienes una cuenta?<a class="link" routerLink="/register"> Regístrate</a>
+      ¿No tienes una cuenta? <a class="breadcrumb-item" routerLink="/register"> Regístrate</a>
     </p>
 
   </div>

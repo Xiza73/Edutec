@@ -44,20 +44,24 @@
       <fa-icon [icon]="faLock" class="icon"></fa-icon>
       <input type="password"
              placeholder="Contraseña"
-             formControlName="password"/>
+             formControlName="password"
+             [maxlength]="20"/>
     </div>
     <div *ngIf="isRequiredField('password')"
           class="text-start text-danger fw-bold mt-1 error">
       Contraseña requerida
     </div>
-
+    <div *ngIf="isMaxLengthExceeded('password')"
+         class="text-start text-danger fw-bold mt-1 error">
+      No se debe exceder los 20 caracteres
+    </div>
     <input type="submit"
            value="Registrarse"
-           class="button rounded"
+           class="button rounded btn btn-primary"
            (click)="signup()"/>
 
     <p>
-      ¿Ya tienes cuenta?<a class="link" routerLink="/login"> Inicia sesión</a>
+      ¿Ya tienes cuenta? <a class="breadcrumb-item" routerLink="/login"> Inicia sesión</a>
     </p>
   </div>
 </form>
