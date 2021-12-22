@@ -3,16 +3,19 @@ import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { UserRoutingModule } from './user-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FavoritesComponent } from './pages/favorites/favorites.component';
 
 
 
 @NgModule({
   declarations: [
-    ProfileComponent
+    ProfileComponent,
+    FavoritesComponent
   ],
   imports: [
     CommonModule,
-    UserRoutingModule
+    UserRoutingModule,
+    SharedModule
   ]
 })
 export class UserModule { }
