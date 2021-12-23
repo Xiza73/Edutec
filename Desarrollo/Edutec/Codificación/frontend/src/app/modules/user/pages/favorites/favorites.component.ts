@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { switchMap } from 'rxjs/operators';
+import { TokenService } from 'src/app/core/services/token.service';
+import { ClientService } from 'src/app/data/services/client.service';
+import { Client } from 'src/app/data/types/client';
+import { Course } from 'src/app/data/types/course';
 
 @Component({
   selector: 'app-favorites',
@@ -6,21 +11,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./favorites.component.scss']
 })
 export class FavoritesComponent implements OnInit {
-  public courses: any[] = [
-    {name:"React course",image:"https://www.academiamoviles.com/viewsAM/fotosCursos/-ios_enero_ii.png",description:"Nivel inicial intermedio",price:123,currency:"PEN",schedule:"Martes y Jueves 3pm a 6pm"},
-    {name:"C# course",image:"https://www.academiamoviles.com/viewsAM/fotosCursos/-ios_enero_ii.png",description:"Nivel inicial intermedio",price:150,currency:"PEN",schedule:"Martes y Jueves 3pm a 6pm"},
-    {name:"JS course",image:"https://www.academiamoviles.com/viewsAM/fotosCursos/-ios_enero_ii.png",description:"Nivel inicial intermedio",price:120,currency:"PEN",schedule:"Martes y Jueves 3pm a 6pm"},
-    {name:"Angular course",image:"https://www.academiamoviles.com/viewsAM/fotosCursos/-ios_enero_ii.png",description:"Nivel inicial intermedio",price:123,currency:"PEN",schedule:"Martes y Jueves 3pm a 6pm"},
-    {name:"React course",image:"https://www.academiamoviles.com/viewsAM/fotosCursos/-ios_enero_ii.png",description:"Nivel inicial intermedio",price:123,currency:"PEN",schedule:"Martes y Jueves 3pm a 6pm"},
-    {name:"C# course",image:"https://www.academiamoviles.com/viewsAM/fotosCursos/-ios_enero_ii.png",description:"Nivel inicial intermedio",price:150,currency:"PEN",schedule:"Martes y Jueves 3pm a 6pm"},
-    {name:"JS course",image:"https://www.academiamoviles.com/viewsAM/fotosCursos/-ios_enero_ii.png",description:"Nivel inicial intermedio",price:120,currency:"PEN",schedule:"Martes y Jueves 3pm a 6pm"},
-    {name:"Angular course",image:"https://www.academiamoviles.com/viewsAM/fotosCursos/-ios_enero_ii.png",description:"Nivel inicial intermedio",price:123,currency:"PEN",schedule:"Martes y Jueves 3pm a 6pm"}
+  public user: Client = {};
+  public favorites: Course[] = [];
 
-  ];
-  constructor() { }
+  constructor(
+    private tokenService: TokenService,
+    private clientService: ClientService
+  ) { }
 
   ngOnInit(): void {
-    
+    const userId = this.tokenService.getClientIdFromToken();
+    if (userId) {
+      this.clientService.readClient(userId)
+        .pipe(
+          switchMap(response => {
+            this.user = response.data;
+            return this.clientService.readFavorites(this.user._id!);
+          })
+        )
+        .subscribe(response => {
+          this.favorites = response.data;
+        });
+    }
   }
 
 }

@@ -37,9 +37,25 @@ export class TokenService {
     if (!token) {
       return null;
     }
-
     const values = this._getTokenPayloadDecoded(token);
     return values.username;
+  }
+
+  public getClientIdFromToken(): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    const values = this._getTokenPayloadDecoded(token);
+    return values.personId;
+  }
+
+  public isLogged(): boolean {
+    if (this.getToken() && this.isValidToken()) {
+      return true;
+    } 
+    return false;
   }
 
   private _tokenExpired(expiration: number): boolean {

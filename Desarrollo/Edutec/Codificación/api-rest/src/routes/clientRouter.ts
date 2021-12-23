@@ -14,6 +14,8 @@ export class ClientRouter {
   }
 
   private _configure(): void {
+    this._router.get('/:id', this._controller.readClient);
+    this._router.get('/favorites/:id', this._controller.readFavorites);
     this._router.post('/favorites/add', this._controller.addFavorite);
     this._router.post('/favorites/remove', this._controller.removeFavorite);
   }
