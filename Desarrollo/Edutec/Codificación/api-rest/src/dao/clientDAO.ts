@@ -1,7 +1,6 @@
 import ErrorHandler from "../helpers/ErrorHandler";
 import ResponseBase from "../helpers/ResponseBase";
 import Client, { IClient } from "../models/Client";
-import Course, { ICourse } from "../models/Course";
 
 export class ClientDAO {
   constructor() {}
@@ -9,19 +8,17 @@ export class ClientDAO {
   public addFavorite = async (body: any) => {
     const { courseId, clientId } = body;
     try {
-      const course: (ICourse & { _id: string; }) | null = await Course.findById(courseId);
-
-      if (course) {
-        return new ErrorHandler(422, "El curso no está registrado");
-      }
-
       const client: (IClient & { _id: string; }) | null = await Client.findById(clientId);
 
-      if (client) {
+      if (!client) {
         return new ErrorHandler(422, "El cliente no está registrado");
       }
 
-      
+      await Client.updateOne({_id: clientId}, {
+        $push: {
+          favorites: courseId
+        }
+      });
 
       return new ResponseBase(200, "Curso agregado a favoritos correctamente");
     } catch (error) {
@@ -32,19 +29,17 @@ export class ClientDAO {
   public removeFavorite = async (body: any) => {
     const { courseId, clientId } = body;
     try {
-      const course: (ICourse & { _id: string; }) | null = await Course.findById(courseId);
-
-      if (course) {
-        return new ErrorHandler(422, "El curso no está registrado");
-      }
-
       const client: (IClient & { _id: string; }) | null = await Client.findById(clientId);
 
-      if (client) {
+      if (!client) {
         return new ErrorHandler(422, "El cliente no está registrado");
       }
 
-      
+      await Client.updateOne({_id: clientId}, {
+        $pull: {
+          favorites: courseId
+        }
+      });
 
       return new ResponseBase(200, "Curso removido de favoritos correctamente");
     } catch (error) {

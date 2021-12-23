@@ -1,6 +1,6 @@
 import { model, Schema, Document } from 'mongoose'
 import { IInstitution } from './Institution';
-import { ISchedule } from './Schedule';
+
 const { ObjectId } = Schema.Types
 
 export interface ICourse extends Document {
