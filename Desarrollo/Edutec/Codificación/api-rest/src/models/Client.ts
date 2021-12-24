@@ -6,6 +6,7 @@ export interface IClient extends Document {
     _id: string,
     email: string,
     favorites: ICourse[],
+    aboutMe: string
 }
 
 const Client = new Schema({
@@ -18,7 +19,12 @@ const Client = new Schema({
         type: ObjectId,
         ref: 'Course',
         required: false
-    }]
+    }],
+    aboutMe: {
+        type: String,
+        unique: false,
+        required: false
+    }
 }, { timestamps: true });
 
 
