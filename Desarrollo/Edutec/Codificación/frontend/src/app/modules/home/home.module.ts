@@ -6,6 +6,7 @@ import { HomeComponent } from './page/home/home.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     HomeRoutingModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    SharedModule
+    SharedModule,
+    NgxSpinnerModule
   ]
 })
 export class HomeModule { }

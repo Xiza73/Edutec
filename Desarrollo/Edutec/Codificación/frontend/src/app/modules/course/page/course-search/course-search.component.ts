@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faBook, faChevronLeft, faChevronRight, faHistory, faSearch, faSort } from '@fortawesome/free-solid-svg-icons';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { SearchService } from 'src/app/core/services/search.service';
 
@@ -19,19 +20,19 @@ export class CourseSearchComponent implements OnInit {
   faChevronLeft = faChevronLeft;
 
   form: FormGroup = this.fb.group({
-    searchTerm: [],
+    searchTerm: ['', [ Validators.minLength(2) ]],
     option    : []
   });
 
   courses: any[] = [];
-  total: number = 0;
+  total: number = -1;
   searchTerm: string = '';
   sort: string = '';
   field: string = 'start';
 
   // Pagination
   coursesToShow: any[] = [];
-  pageSize: number = 2;
+  pageSize: number = 10;
   currentPage: number = 1;
   numberPages: number = 0;
 
@@ -43,7 +44,8 @@ export class CourseSearchComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private searchService: SearchService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -123,6 +125,9 @@ export class CourseSearchComponent implements OnInit {
   }
 
   private searchCourses(): void {
+    this.total = -1;
+    this.spinner.show();
+
     this.setOrderOptions(this.form.value.option);
 
     this.searchService.searchCourses(this.form.value.searchTerm, this.field, this.sort).subscribe(
@@ -133,18 +138,24 @@ export class CourseSearchComponent implements OnInit {
         
         this.numberPages = Math.ceil(this.total / this.pageSize);
         this.coursesToShow = this.courses.slice(0, this.pageSize);
-
-        this.getCourseSearchHistory();
       },
       err => {
         this.toastr.error(err.error.message, 'Error');
+        this.total = 0;
+      },
+      () => {
+        this.spinner.hide();
+        if (this.total > 0) {
+          this.searchService.saveSearch(this.form.value.searchTerm);
+          this.getCourseSearchHistory();
+        }
       }
     );
   }
 
   private getCourseSearchHistory(): void {
     const history = localStorage.getItem('courseSearchHistory');
-    this.courseSearchHistory = JSON.parse(history!);
+    this.courseSearchHistory = JSON.parse(history!).reverse();
   }
 
 }

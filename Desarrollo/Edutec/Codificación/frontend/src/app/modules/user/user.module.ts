@@ -4,6 +4,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { UserRoutingModule } from './user-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FavoritesComponent } from './pages/favorites/favorites.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -15,7 +16,8 @@ import { FavoritesComponent } from './pages/favorites/favorites.component';
   imports: [
     CommonModule,
     UserRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxSpinnerModule
   ]
 })
 export class UserModule { }

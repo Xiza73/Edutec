@@ -58,7 +58,13 @@
   <div class="col-9 pt-3 ps-5 pb-5">
     <div class="col-12 fw-bold d-flex justify-content-between mb-3">
       <p>Cursos disponibles<span *ngIf="searchTerm.length > 0"> para la búsqueda "{{ searchTerm }}"</span></p>
-      <p><span class="text-danger">{{ total }}</span> {{ (total === 1) ? 'curso' : 'cursos' }}</p>
+      <p><span class="text-danger">{{ (total === -1) ?  0 : total}}</span> {{ (total === 1) ? 'curso' : 'cursos' }}</p>
+    </div>
+
+    <div *ngIf="total === -1"
+         class="position-relative spinner-container">
+      <ngx-spinner [fullScreen]="false" color="#e95420" type="ball-beat" size="medium">
+      </ngx-spinner>
     </div>
 
     <div *ngIf="total > 0">

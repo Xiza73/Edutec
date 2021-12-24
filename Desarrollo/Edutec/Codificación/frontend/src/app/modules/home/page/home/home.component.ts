@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CourseService } from 'src/app/data/services/course.service';
 
@@ -23,13 +24,16 @@ export class HomeComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private courseService: CourseService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.courseService.readCourses('', 'start', '-1').subscribe(
       response => {
         this.courses = response.data.slice(0, 4);
+        this.spinner.hide();
       },
       err => {
         this.toastr.error(err.error.message, 'Error');

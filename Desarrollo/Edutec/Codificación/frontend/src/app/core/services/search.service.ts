@@ -13,15 +13,15 @@ export class SearchService {
   ) { }
 
   public searchCourses(name = '', field = 'start', sort = 'asc'): Observable<any> {
-    this.saveSearch(name);
-
     if (sort === 'desc') {
       return this.courseService.readCourses(name, field, '-1');
     }
     return this.courseService.readCourses(name, field, '1');
   }
 
-  private saveSearch(name: string): void {
+  public saveSearch(term: string): void {
+    const name = term.toLowerCase();
+
     if (name === '' || this.courseSearchHistory.includes(name)) {
       return;
     }

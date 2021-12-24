@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { switchMap } from 'rxjs/operators';
 import { TokenService } from 'src/app/core/services/token.service';
 import { ClientService } from 'src/app/data/services/client.service';
@@ -13,13 +14,16 @@ import { Course } from 'src/app/data/types/course';
 export class FavoritesComponent implements OnInit {
   public user: Client = {};
   public favorites: Course[] = [];
+  public total = -1;
 
   constructor(
     private tokenService: TokenService,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     const userId = this.tokenService.getClientIdFromToken();
     if (userId) {
       this.clientService.readClient(userId)
@@ -31,6 +35,8 @@ export class FavoritesComponent implements OnInit {
         )
         .subscribe(response => {
           this.favorites = response.data;
+          this.total = this.favorites.length;
+          this.spinner.hide();
         });
     }
   }
