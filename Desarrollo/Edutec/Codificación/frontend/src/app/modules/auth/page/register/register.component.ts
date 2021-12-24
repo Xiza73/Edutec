@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
   
   // Form
   form: FormGroup = this.fb.group({
-    username: ['', [ Validators.required, Validators.maxLength(50) ]],
+    username: ['', [ Validators.required, Validators.maxLength(50), Validators.pattern("[A-Za-z0-9]+")]],
     email   : ['', [ Validators.required, Validators.email, Validators.maxLength(50) ]],
     password: ['', [ Validators.required, Validators.minLength(8), Validators.maxLength(20) ]]
   });
@@ -57,6 +57,11 @@ export class RegisterComponent implements OnInit {
   isRequiredField(field: string): boolean {
     const formControl = this.form.get(field);
     return formControl?.errors?.required && formControl?.touched;
+  }
+
+  isPatternValid(field: string): boolean{
+    const formControl = this.form.get(field);
+    return formControl?.errors?.pattern && formControl?.touched;
   }
 
   isValidEmail(): boolean {

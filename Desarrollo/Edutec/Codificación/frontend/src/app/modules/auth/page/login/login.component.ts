@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   // Form
   form: FormGroup = this.fb.group({
     email   : ['', [ Validators.required, Validators.email, Validators.maxLength(50) ]],
-    password: ['', [ Validators.required ]]
+    password: ['', [ Validators.required, Validators.minLength(3) ]]
   });
 
   errors: any;
@@ -73,5 +73,9 @@ export class LoginComponent implements OnInit {
     return formControl?.errors?.maxlength && formControl?.touched; 
   }
 
+  isMinLengthInvalid(field: string): boolean {
+    const formControl = this.form.get(field);
+    return formControl?.errors?.minlength && formControl?.touched; 
+  }
 
 }
