@@ -17,13 +17,13 @@ export class ClientService {
     return this.httpClient.get(this.apiUrl + `/client/${clientId}`);
   }
 
-  public addFavorite(clientId: string, courseId: string): Observable<any> {
-    const payload = { clientId, courseId };
+  public addFavorite(clientId: string, courseUrl: string): Observable<any> {
+    const payload = { clientId, courseUrl };
     return this.httpClient.post(this.apiUrl + '/client/favorites/add', payload);
   }
 
-  public removeFavorite(clientId: string, courseId: string): Observable<any> {
-    const payload = { clientId, courseId };
+  public removeFavorite(clientId: string, courseUrl: string): Observable<any> {
+    const payload = { clientId, courseUrl };
     return this.httpClient.post(this.apiUrl + '/client/favorites/remove', payload);
   }
 

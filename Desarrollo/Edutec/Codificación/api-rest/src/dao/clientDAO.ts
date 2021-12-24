@@ -17,7 +17,7 @@ export class ClientDAO {
   }
 
   public addFavorite = async (body: any) => {
-    const { courseId, clientId } = body;
+    const { courseUrl, clientId } = body;
     try {
       const client: (IClient & { _id: string; }) | null = await Client.findById(clientId);
 
@@ -27,7 +27,7 @@ export class ClientDAO {
 
       await Client.updateOne({_id: clientId}, {
         $push: {
-          favorites: courseId
+          favorites: courseUrl
         }
       });
 
@@ -38,7 +38,7 @@ export class ClientDAO {
   };
 
   public removeFavorite = async (body: any) => {
-    const { courseId, clientId } = body;
+    const { courseUrl, clientId } = body;
     try {
       const client: (IClient & { _id: string; }) | null = await Client.findById(clientId);
 
@@ -48,7 +48,7 @@ export class ClientDAO {
 
       await Client.updateOne({_id: clientId}, {
         $pull: {
-          favorites: courseId
+          favorites: courseUrl
         }
       });
 
@@ -66,12 +66,7 @@ export class ClientDAO {
         return new ErrorHandler(422, "El cliente no está registrado");
       }
 
-      const coursesIds: string[] = [];
-      client.favorites.forEach(course => {
-        coursesIds.push(course._id);
-      });
-
-      const data = await Course.find({'_id': {$in: coursesIds}})
+      const data = await Course.find({'url': {$in: client.favorites}})
 
       return new ResponseData(200, "Cursos favoritos obtenidos correctamente", data);
     } catch (error) {
