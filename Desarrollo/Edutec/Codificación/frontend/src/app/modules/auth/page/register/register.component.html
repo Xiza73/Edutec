@@ -51,6 +51,13 @@
           class="text-start text-danger fw-bold mt-1 error">
       Contraseña requerida
     </div>
+
+    <div *ngIf="isMinLengthInvalid('password')"
+          class="text-start text-danger fw-bold mt-1 error">
+      La contraseña debe tener como mínimo 8 caracteres
+    </div>
+
+
     <div *ngIf="isMaxLengthExceeded('password')"
          class="text-start text-danger fw-bold mt-1 error">
       No se debe exceder los 20 caracteres

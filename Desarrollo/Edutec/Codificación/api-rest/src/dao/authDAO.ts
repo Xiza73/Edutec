@@ -23,6 +23,7 @@ export class AuthDAO {
       {
         id: user._id,
         username: user.username,
+        personId: user.person._id
       },
       config.jwtSecret,
       {

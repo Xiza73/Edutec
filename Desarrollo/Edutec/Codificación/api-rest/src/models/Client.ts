@@ -5,7 +5,7 @@ const { ObjectId } = Schema.Types
 export interface IClient extends Document {
     _id: string,
     email: string,
-    favorites: ICourse[],
+    favorites: string[],
 }
 
 const Client = new Schema({
@@ -15,8 +15,7 @@ const Client = new Schema({
         required: true
     },
     favorites: [{
-        type: ObjectId,
-        ref: 'Course',
+        type: String,
         required: false
     }]
 }, { timestamps: true });
