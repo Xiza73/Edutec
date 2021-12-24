@@ -67,6 +67,11 @@ export class CourseDetailComponent implements OnInit {
   }
 
   public addDeleteFavorite(): void {
+    if (!this.tokenService.isLogged()) {
+      this.toastr.info('Inicia sesión para agregar a favoritos', 'Favoritos');
+      return;
+    }
+
     this.active = !this.active
 
     if (this.active) {
@@ -76,7 +81,7 @@ export class CourseDetailComponent implements OnInit {
             this.toastr.success('Curso agregado a favoritos', 'Favoritos');
           }
         }
-      )
+      );
     } else {
       this.clientService.removeFavorite(this.user._id!, this.courseId).subscribe(
         response => {
@@ -84,7 +89,7 @@ export class CourseDetailComponent implements OnInit {
             this.toastr.success('Curso eliminado de favoritos', 'Favoritos');
           }
         }
-      )
+      );
     }
   }
 
