@@ -22,4 +22,20 @@ export class ClientService {
   public readFavorites = async (id: string) => {
     return await this.clientDAO.readFavorites(id);
   }
+
+  public getUserProfile = async (username: any) => {
+    return await this.clientDAO.getUserProfile(username);
+  };
+
+  public getUserProfileId = async (id: any) => {
+    return await this.clientDAO.getUserProfileId(id);
+  };
+
+  public updateUserProfile = async (body: any) => {
+    return await this.clientDAO.updateUserProfile(body);
+  };
+  
+  public updateUserProfileId = async (body: any) => {
+    return await this.clientDAO.updateUserProfileId(body);
+  };
 }

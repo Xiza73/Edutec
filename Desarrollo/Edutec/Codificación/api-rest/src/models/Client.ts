@@ -6,6 +6,7 @@ export interface IClient extends Document {
     _id: string,
     email: string,
     favorites: string[],
+    aboutMe: string
 }
 
 const Client = new Schema({
@@ -17,7 +18,12 @@ const Client = new Schema({
     favorites: [{
         type: String,
         required: false
-    }]
+    }],
+    aboutMe: {
+        type: String,
+        unique: false,
+        required: false
+    }
 }, { timestamps: true });
 
 
