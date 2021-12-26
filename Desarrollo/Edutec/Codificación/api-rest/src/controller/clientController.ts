@@ -2,15 +2,15 @@ import { NextFunction, Request, Response } from "express";
 import { ClientService } from "../service/clientService";
 
 export class ClientController {
-  private clientController: ClientService;
+  private clientService: ClientService;
 
   constructor() {
-    this.clientController = new ClientService();
+    this.clientService = new ClientService();
   }
 
   public getUserProfile = async (req: Request, res: Response, next: NextFunction) => {
     const { username } = req.query;
-    const response = await this.clientController.getUserProfile(username);
+    const response = await this.clientService.getUserProfile(username);
 
     if (response.statusCode === 200) return res.status(200).json(response);
     next(response);
@@ -19,7 +19,7 @@ export class ClientController {
 
   public getUserProfileId = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.query;
-    const response = await this.clientController.getUserProfileId(id);
+    const response = await this.clientService.getUserProfileId(id);
 
     if (response.statusCode === 200) return res.status(200).json(response);
     next(response);
@@ -27,7 +27,7 @@ export class ClientController {
   };
 
   public updateUserProfile = async (req: Request, res: Response, next: NextFunction) => {
-    const response = await this.clientController.updateUserProfile(req.body);
+    const response = await this.clientService.updateUserProfile(req.body);
 
     if (response.statusCode === 200) return res.status(200).json(response);
     next(response);
@@ -35,7 +35,7 @@ export class ClientController {
   };
   
   public updateUserProfileId = async (req: Request, res: Response, next: NextFunction) => {
-    const response = await this.clientController.updateUserProfileId(req.body);
+    const response = await this.clientService.updateUserProfileId(req.body);
 
     if (response.statusCode === 200) return res.status(200).json(response);
     next(response);

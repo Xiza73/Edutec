@@ -3,6 +3,7 @@ import ResponseBase from "../helpers/ResponseBase";
 import ResponseData from "../helpers/ResponseData";
 import User, { IUser } from "../models/User";
 import Client, { IClient } from "../models/Client";
+import { ObjectId } from "mongoose";
 
 export class ClientDAO {
   constructor() {}
@@ -21,6 +22,7 @@ export class ClientDAO {
         return new ErrorHandler(400, "Datos de usuario no encontrados");
 
       return new ResponseData(200, "Datos de usuario obtenidos correctamente", {
+        id: user._id,
         username: user.username,
         email: client.email,
         aboutMe: client.aboutMe,
