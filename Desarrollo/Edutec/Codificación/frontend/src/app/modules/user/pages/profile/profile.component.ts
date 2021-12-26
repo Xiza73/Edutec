@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClientService } from 'src/app/core/services/client.service';
 import { TokenService } from 'src/app/core/services/token.service';
 
@@ -16,6 +12,7 @@ import { TokenService } from 'src/app/core/services/token.service';
 export class ProfileComponent implements OnInit {
   public isLogged: boolean = false;
   public username: string = '';
+  public id: string | null = '';
   public form = new FormGroup({
     email: new FormControl({ disabled: true }, [
       Validators.required,
@@ -45,24 +42,22 @@ export class ProfileComponent implements OnInit {
       this.toastr.error('No se encuentra loggeado', 'Error');
       return;
     }
-    if(!this.username){
-      this.username = localStorage.getItem('username')!
-      if(!this.username){
-        this.username = this.tokenService.getUsernameFromToken()!;
-        if (!this.username) {
-          this.toastr.error('Error al obtener la data', 'Error');
-          return;
-        }
-      }
+    this.id = this.tokenService.getIdFromToken();
+    if (!this.id) {
+      this.toastr.error('Error al encontrar usuario', 'Error');
+      return;
     }
-    this._clientService.getUserProfile(this.username).subscribe(
+    this._clientService.getUserProfile(this.id).subscribe(
       (res) => {
         const { email, username, aboutMe } = res.body.data;
-        this.form.setValue({ email, username, aboutMe });
-        this.username = username.slice()
+        if (aboutMe) {
+          this.form.setValue({ email, username, aboutMe });
+        } else {
+          this.form.setValue({ email, username, aboutMe: '' });
+        }
       },
       (err) => {
-        this.toastr.error(err.error.message, 'Error');
+        this.toastr.error(err.error.message, `Error: ${err.error.statusCode}`);
       }
     );
   }
@@ -75,18 +70,16 @@ export class ProfileComponent implements OnInit {
     const body = {
       username: this.form.value.username,
       aboutMe: this.form.value.aboutMe,
-      prevUsername: this.username
-    }
+      id: this.id,
+    };
     this._clientService.updateUserProfile(body).subscribe(
       (res) => {
-        this.toastr.success(res.message, `OK: ${res.statusCode}`)
-        this.username = this.form.value.username
-        localStorage.setItem('username', this.username)
-        this.getData()
+        this.toastr.success(res.message, `OK: ${res.statusCode}`);
+        this.getData();
       },
       (err) => {
         this.toastr.error(err.error.message, `Error: ${err.error.statusCode}`);
       }
-    )
+    );
   }
 }

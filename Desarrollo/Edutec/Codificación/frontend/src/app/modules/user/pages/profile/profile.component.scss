@@ -12,7 +12,10 @@
     .img {
       width: 320px;
       height: 320px;
-      background-color: black;
+      background-image: url('https://image.flaticon.com/icons/png/512/47/47774.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
     }
     p {
       font-size: 1.8rem;

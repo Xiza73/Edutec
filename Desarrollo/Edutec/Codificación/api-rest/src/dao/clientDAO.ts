@@ -3,7 +3,6 @@ import ResponseBase from "../helpers/ResponseBase";
 import ResponseData from "../helpers/ResponseData";
 import User, { IUser } from "../models/User";
 import Client, { IClient } from "../models/Client";
-import { ObjectId } from "mongoose";
 
 export class ClientDAO {
   constructor() {}

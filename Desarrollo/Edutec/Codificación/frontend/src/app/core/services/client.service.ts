@@ -12,15 +12,15 @@ export class ClientService {
 
   constructor(private httpClient: HttpClient) {}
 
-  public getUserProfile(username: string): Observable<any> {
+  public getUserProfile(id: string): Observable<any> {
     let params: HttpParams = new HttpParams();
-    if (username) {
-      params = params.append('username', username);
+    if (id) {
+      params = params.append('id', id);
     }
-    return this.httpClient.get<any>(this.apiUrl + '/client', { observe: "response", params });
+    return this.httpClient.get<any>(this.apiUrl + '/client/profile/id', { observe: "response", params });
   }
 
   public updateUserProfile(body: any): Observable<any> {
-    return this.httpClient.post<any>(this.apiUrl + '/client', body, { observe: "body" });
+    return this.httpClient.post<any>(this.apiUrl + '/client/profile/id', body, { observe: "body" });
   }
 }

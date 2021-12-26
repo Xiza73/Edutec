@@ -42,6 +42,17 @@ export class TokenService {
     return values.username;
   }
 
+  public getIdFromToken(): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    const values = this._getTokenPayloadDecoded(token);
+    console.log(values)
+    return values.id;
+  }
+
   private _tokenExpired(expiration: number): boolean {
     return Math.floor(new Date().getTime() / 1000) >= expiration;
   }
@@ -51,5 +62,5 @@ export class TokenService {
     const payloadDecoded = atob(payload);
     return JSON.parse(payloadDecoded);
   }
- 
+
 }
