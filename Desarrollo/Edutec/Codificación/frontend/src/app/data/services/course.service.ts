@@ -14,13 +14,17 @@ export class CourseService {
     private httpClient: HttpClient
   ) { }
 
-  public readCourses(name: string, field = 'start', order = 1): Observable<any> {
+  public readCourses(name: string, field: string, sort: string): Observable<any> {
     const params = new HttpParams()
       .set('name', name)
       .set('field', field)
-      .set('order', order);
+      .set('sort', sort);
 
     return this.httpClient.get(this.apiUrl + '/course', {params});
+  }
+
+  public readCourse(id: string): Observable<any> {
+    return this.httpClient.get(this.apiUrl + `/course/${id}`);
   }
 
   public setCourses(courses: any[]) {

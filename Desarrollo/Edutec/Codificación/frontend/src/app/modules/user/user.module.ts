@@ -3,17 +3,23 @@ import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { UserRoutingModule } from './user-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { FavoritesComponent } from './pages/favorites/favorites.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
 @NgModule({
   declarations: [
-    ProfileComponent
+    ProfileComponent,
+    FavoritesComponent
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule,
+    NgxSpinnerModule
   ]
 })
 export class UserModule { }

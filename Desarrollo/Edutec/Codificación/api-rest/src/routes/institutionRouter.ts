@@ -16,5 +16,6 @@ export class InstitutionRouter {
   private _configure(): void {
     this._router.post('/', this._controller.addInstitution);
     this._router.get('/', this._controller.readInstitutions);
+    this._router.get('/:id', this._controller.readInstitution);
   }
 }

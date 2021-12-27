@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { SearchService } from 'src/app/core/services/search.service';
+import { CourseService } from 'src/app/data/services/course.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ import { SearchService } from 'src/app/core/services/search.service';
 })
 export class HomeComponent implements OnInit {
   faBook = faBook;
-  public courses: any[] = [1, 2, 3, 4];
+  courses: any[] = [];
 
   // Form
   form: FormGroup = this.fb.group({
@@ -21,26 +22,33 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private searchService: SearchService,
-    private toastr: ToastrService,
     private router: Router,
+    private courseService: CourseService,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
-  }
-
-  findCourse(): void {
-    const { name } = this.form.value;
-    this.searchService.searchCourses(name).subscribe(
+    this.spinner.show();
+    this.courseService.readCourses('', 'start', '-1').subscribe(
       response => {
-        this.searchService.setCourses(response.data);
-        this.router.navigate(['cursos/busqueda']);
+        this.courses = response.data.slice(0, 4);
+        this.spinner.hide();
       },
       err => {
         this.toastr.error(err.error.message, 'Error');
-        this.form.reset();
       }
     );
   }
 
+  findCourse(): void {
+    const { name } = this.form.value;
+    
+    this.router.navigate(['cursos/busqueda'], {queryParams: {
+      'course': name, 
+      'option': 1
+    }});
+  }
 }
+
+

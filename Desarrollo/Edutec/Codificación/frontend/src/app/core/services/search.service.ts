@@ -6,27 +6,35 @@ import { CourseService } from 'src/app/data/services/course.service';
   providedIn: 'root'
 })
 export class SearchService {
-  private courses: any[] = [];
-  private searchTerm: string = '';
+  private courseSearchHistory: string[] = [];
 
   constructor(
     private courseService: CourseService
   ) { }
 
-  public searchCourses(name: string, field = 'start', order = 1): Observable<any> {
-    this.searchTerm = name;
-    return this.courseService.readCourses(name, field, order);
+  public searchCourses(name = '', field = 'start', sort = 'asc'): Observable<any> {
+    if (sort === 'desc') {
+      return this.courseService.readCourses(name, field, '-1');
+    }
+    return this.courseService.readCourses(name, field, '1');
   }
 
-  public setCourses(courses: any[]) {
-    this.courses = courses;
+  public saveSearch(term: string): void {
+    const name = term.toLowerCase();
+
+    if (name === '' || this.courseSearchHistory.includes(name)) {
+      return;
+    }
+
+    if (this.courseSearchHistory.length === 5) {
+      this.courseSearchHistory.shift();
+    }
+
+    this.courseSearchHistory.push(name);
+    localStorage.setItem( 'courseSearchHistory', JSON.stringify(this.courseSearchHistory) );
   }
 
-  public getCourses(): any[] {
-    return this.courses;
-  }
-
-  public getSearchTerm(): string {
-    return this.searchTerm;
+  public getCourseSearchHistory(): any[] {
+    return this.courseSearchHistory;
   }
 }

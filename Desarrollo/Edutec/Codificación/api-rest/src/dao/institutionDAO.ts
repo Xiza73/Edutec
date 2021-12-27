@@ -26,4 +26,12 @@ export class InstitutionDAO {
     }
   };
 
+  public readInstitution = async (id: string) => {
+    try {
+      const data = await Institution.findById(id);
+      return new ResponseData(200, "Institución obtenida correctamente", data);
+    } catch (error) {
+      return new ErrorHandler(404, "Error al obtener institución");
+    }
+  };
 }

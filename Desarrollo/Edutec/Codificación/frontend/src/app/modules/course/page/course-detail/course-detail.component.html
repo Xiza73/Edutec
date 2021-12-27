@@ -1,51 +1,57 @@
-<div class="details-container">
-  <div class="img-course">
-    <div class="img"></div>
-  </div>
-  <div class="data-course">
-    <h1>Nombre del Curso</h1>
-    <p><b>Brindado por: </b>Universidad Nacional Mayor de San Marcos</p>
-    <p><b>Fecha de Inicio: </b>22/02/22</p>
-    <p><b>Duración: </b>22 meses</p>
-    <p><b>Horario: </b>Lunes - Viernes 8:00am - 12:00pm</p>
-    <p><b>Instructores: </b>Mariñosgod</p>
-    <p><b>Lugar: </b>Ciudad universitaria</p>
-    <p class="price"><b>Precio: </b>S/ 129.99</p>
-    <div class="buy">
-      <fa-icon
-        [icon]="faHeart"
-        [className]="active ? 'icon active_heart' : 'icon heart'"
-        (click)="addDeleteFavorite()"
-      ></fa-icon>
-      <p (click)="addDeleteFavorite()">Añadir a favoritos</p>
-      <button class="btn btn-warning">Comprar</button>
+<div class="course-container">
+  <div class="row course-data">
+    <div class="col-4">
+      <div class="img-container">
+        <img src="./assets/images/course.jpg" [src]="course.image" alt="">
+      </div>
+    </div>
+    <div class="col-8">
+      <h1 class="mb-4">{{ course.name }}</h1>
+      <p class="mb-3"><b>Brindado por: </b>{{ institution.name }}</p>
+      <p class="mb-3"><b>Fecha de Inicio: </b>{{ course.start | date }}</p>
+      <p class="mb-3"><b>Duración: </b>{{ (course.duration) ? course.duration : '-' }}</p>
+      <p class="mb-3"><b>Horario: </b>{{ course.schedule }}</p>
+      <p class="mb-3 price"><b>Precio: </b>{{ course.price | currency }}</p>
+      <div class="mt-5">
+        <div class="buy">
+          <fa-icon [icon]="faHeart"
+                   [className]="active ? 'icon active_heart' : 'icon heart'"
+                   (click)="addDeleteFavorite()">
+          </fa-icon>
+          <p (click)="addDeleteFavorite()">Añadir a favoritos</p>
+          
+          <a [href]="course.url"
+             class="btn btn-warning">
+            Comprar
+          </a>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="details-course">
-    <h1>Detalles del Curso</h1>
-    <h2>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti id amet
-      ipsa non eius, numquam minus voluptate cum quos perferendis.
-    </h2>
-    <p>
-      1) Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
-      tempora.
-    </p>
-    <p>
-      2) Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
-      tempora.
-    </p>
-    <p>
-      3) Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
-      tempora.
-    </p>
-    <p>
-      4) Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
-      tempora.
-    </p>
-    <p>
-      5) Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore,
-      tempora.
-    </p>
+
+  <div class="row course-description">
+    <div class="col-12">
+      <h1>Descripción</h1>
+      <p *ngIf="course.description !== ''"
+         class="text-justify">
+         {{ course.description }}
+      </p>
+      <p *ngIf="course.description === ''"
+          class="text-justify text-danger fw-bold">
+          No se encontró una descripción.
+      </p>
+    </div>
   </div>
+
+  <!-- <div class="row recommended-courses">
+    <div class="col-12">
+      <h1>Otros cursos que te pueden interesar</h1>
+      <div class="d-flex justify-content-between align-items-center flex-wrap pt-4">
+        <div *ngFor="let item of courses">
+          <app-course-box [course]="item">
+          </app-course-box>
+        </div>
+      </div>
+    </div>
+  </div> -->
 </div>

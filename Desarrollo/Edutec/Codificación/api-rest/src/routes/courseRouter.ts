@@ -17,7 +17,7 @@ export class CourseRouter {
     this._router.post('/', this._controller.addCourse);
     this._router.get('/', this._controller.readCourses);
     this._router.get('/:id', this._controller.readCourse);
-    this._router.get('/:id', this._controller.updateCourse);
+    this._router.put('/:id', this._controller.updateCourse);
     this._router.delete('/:id', this._controller.removeCourse);
   }
 }

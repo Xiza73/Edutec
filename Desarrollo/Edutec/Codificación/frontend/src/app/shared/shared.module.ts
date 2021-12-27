@@ -1,18 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SummarizePipe } from './pipes/summarize.pipe';
+import { CourseBoxComponent } from './components/course-box/course-box.component';
+import { RouterModule } from '@angular/router';
 
 
 
 @NgModule({
   declarations: [
-    SummarizePipe
+    SummarizePipe,
+    CourseBoxComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [
-    SummarizePipe
+    SummarizePipe,
+    CourseBoxComponent
   ]
 })
 export class SharedModule { }

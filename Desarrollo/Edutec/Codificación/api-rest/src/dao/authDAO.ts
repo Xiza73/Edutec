@@ -6,6 +6,7 @@ import Client, { IClient } from "../models/Client";
 import ResponseBase from "../helpers/ResponseBase";
 import Role from "../models/Role";
 import { IRole } from "../models/Role";
+import ResponseData from "../helpers/ResponseData";
 
 export class ResponseLogin {
   constructor(
@@ -23,6 +24,7 @@ export class AuthDAO {
       {
         id: user._id,
         username: user.username,
+        personId: user.person._id,
       },
       config.jwtSecret,
       {
@@ -122,12 +124,36 @@ export class AuthDAO {
       return new ErrorHandler(400, "Error al registrar usuario");
     }
   };
-  
+
   public async logout() {
     try {
       return new ResponseBase(200, "Adiós");
     } catch (err) {
       return new ErrorHandler(400, "Error al cerrar la sesión");
+    }
+  }
+
+  public async sendRecoverEmail(body: any) {
+    try {
+      const { email } = body;
+      const client: (IClient & { _id: any }) | null = await Client.findOne({
+        email,
+      });
+      if (!client)
+        return new ErrorHandler(
+          404,
+          "No existe un usuario registrado con ese correo"
+        );
+      const user: (IUser & { _id: any }) | null = await User.findOne({
+        person: client._id,
+      });
+      if (!user)
+        return new ErrorHandler(404, "Error al conseguir datos de usuario");
+      return new ResponseData(200, "Usuario encontrado", {
+        id: user._id,
+      });
+    } catch (error) {
+      return new ErrorHandler(400, "Error al encontrar usuario");
     }
   }
 }

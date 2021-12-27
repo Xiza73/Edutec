@@ -20,9 +20,9 @@ export class CourseController {
   public readCourses = async (req: Request, res: Response, next: NextFunction) => {
     const name = req.query.name as string;
     const field = req.query.field as string | "start";
-    const order = req.query.field as string | "1";
+    const sort = req.query.sort as string | "1";
 
-    const response = await this.courseService.readCourses(name, field, Number(order));
+    const response = await this.courseService.readCourses(name, field, Number(sort));
 
     if (response.statusCode === 200) return res.status(200).json(response);
     next(response);
