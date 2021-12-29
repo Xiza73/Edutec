@@ -22,6 +22,23 @@ export class AuthService {
 
   public logout(): void {}
 
+  //Recover password
+  public isUser(id: string): Observable<any> {
+    return this.httpClient.post<any>(
+      this.apiUrl + '/isuser',
+      { id },
+      { observe: 'body' }
+    );
+  }
+
+  public resetPassword(id: string, password: string): Observable<any> {
+    return this.httpClient.post<any>(
+      this.apiUrl + '/reset',
+      { id, password },
+      { observe: 'body' }
+    );
+  }
+
   public sendRecoverEmail(email: string): Observable<any> {
     return this.httpClient.post<any>(
       this.apiUrl + '/recover',
