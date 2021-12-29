@@ -49,4 +49,24 @@ export class AuthController {
     next(response);
     return;
   };
+
+  public isUser = async (req: Request, res: Response, next: NextFunction) => {
+    const response = await this.authService.isUser(req.body);
+
+    if (response.statusCode === 200) return res.status(200).json(response);
+    next(response);
+    return;
+  };
+
+  public changePassword = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const response = await this.authService.changePassword(req.body);
+
+    if (response.statusCode === 200) return res.status(200).json(response);
+    next(response);
+    return;
+  };
 }

@@ -50,4 +50,12 @@ export class AuthService {
       return new ErrorHandler(400, "Error al enviar correo");
     }
   };
+
+  public async isUser(body: any) {
+    return await this.authDAO.isUser(body);
+  }
+
+  public async changePassword(body: any) {
+    return await this.authDAO.changePassword(body);
+  }
 }

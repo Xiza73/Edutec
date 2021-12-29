@@ -1,4 +1,4 @@
-import User, { IUser } from "../models/User";
+import User, { IUser, encryptPassword } from "../models/User";
 import jwt from "jsonwebtoken";
 import config from "../config/config";
 import ErrorHandler from "../helpers/ErrorHandler";
@@ -156,4 +156,28 @@ export class AuthDAO {
       return new ErrorHandler(400, "Error al encontrar usuario");
     }
   }
+
+  public isUser = async (body: any) => {
+    try {
+      const { id } = body;
+      if (!id) return new ErrorHandler(400, "Identificador no válido");
+      const user: (IUser & { _id: any }) | null = await User.findById(id);
+      if (!user) return new ErrorHandler(400, "Usuario no encontrado");
+      return new ResponseBase(200, "Usuario encontrado");
+    } catch (error) {
+      return new ErrorHandler(400, "Error al encontrar usuario");
+    }
+  };
+
+  public changePassword = async (body: any) => {
+    try {
+      let { id, password } = body;
+      if (!password || !id) return new ErrorHandler(400, "Datos incompletos");
+      password = await encryptPassword(password);
+      await User.findByIdAndUpdate(id, { password });
+      return new ResponseBase(200, "Contraseña actualizada correctamente");
+    } catch (error) {
+      return new ErrorHandler(404, "Error al cambiar contraseña");
+    }
+  };
 }
