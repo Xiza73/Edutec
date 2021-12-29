@@ -1,4 +1,4 @@
-import User, { IUser } from "../models/User";
+import User, { IUser, encryptPassword } from "../models/User";
 import jwt from "jsonwebtoken";
 import config from "../config/config";
 import ErrorHandler from "../helpers/ErrorHandler";
@@ -6,6 +6,7 @@ import Client, { IClient } from "../models/Client";
 import ResponseBase from "../helpers/ResponseBase";
 import Role from "../models/Role";
 import { IRole } from "../models/Role";
+import ResponseData from "../helpers/ResponseData";
 
 export class ResponseLogin {
   constructor(
@@ -23,7 +24,7 @@ export class AuthDAO {
       {
         id: user._id,
         username: user.username,
-        personId: user.person._id
+        personId: user.person._id,
       },
       config.jwtSecret,
       {
@@ -123,7 +124,7 @@ export class AuthDAO {
       return new ErrorHandler(400, "Error al registrar usuario");
     }
   };
-  
+
   public async logout() {
     try {
       return new ResponseBase(200, "Adiós");
@@ -131,4 +132,52 @@ export class AuthDAO {
       return new ErrorHandler(400, "Error al cerrar la sesión");
     }
   }
+
+  public async sendRecoverEmail(body: any) {
+    try {
+      const { email } = body;
+      const client: (IClient & { _id: any }) | null = await Client.findOne({
+        email,
+      });
+      if (!client)
+        return new ErrorHandler(
+          404,
+          "No existe un usuario registrado con ese correo"
+        );
+      const user: (IUser & { _id: any }) | null = await User.findOne({
+        person: client._id,
+      });
+      if (!user)
+        return new ErrorHandler(404, "Error al conseguir datos de usuario");
+      return new ResponseData(200, "Usuario encontrado", {
+        id: user._id,
+      });
+    } catch (error) {
+      return new ErrorHandler(400, "Error al encontrar usuario");
+    }
+  }
+
+  public isUser = async (body: any) => {
+    try {
+      const { id } = body;
+      if (!id) return new ErrorHandler(400, "Identificador no válido");
+      const user: (IUser & { _id: any }) | null = await User.findById(id);
+      if (!user) return new ErrorHandler(400, "Usuario no encontrado");
+      return new ResponseBase(200, "Usuario encontrado");
+    } catch (error) {
+      return new ErrorHandler(400, "Error al encontrar usuario");
+    }
+  };
+
+  public changePassword = async (body: any) => {
+    try {
+      let { id, password } = body;
+      if (!password || !id) return new ErrorHandler(400, "Datos incompletos");
+      password = await encryptPassword(password);
+      await User.findByIdAndUpdate(id, { password });
+      return new ResponseBase(200, "Contraseña actualizada correctamente");
+    } catch (error) {
+      return new ErrorHandler(404, "Error al cambiar contraseña");
+    }
+  };
 }

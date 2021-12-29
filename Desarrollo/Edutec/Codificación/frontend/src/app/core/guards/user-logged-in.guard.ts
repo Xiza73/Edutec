@@ -12,15 +12,15 @@ export class UserLoggedInGuard implements CanActivate {
   ) {}
 
   canActivate(
-    route: ActivatedRouteSnapshot, 
+    route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    
+
     const url = state.url;
     const isAuthenticated = this.tokenService.isLogged();
 
     if (url === '/login' || url === '/register' || url === '/password-recovery'
-        || url.startsWith('/new-password') ) {
-        
+        || url.startsWith('/new-password')) {
+
       if (isAuthenticated) {
         this.router.navigate(['/']);
       }

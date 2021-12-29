@@ -6,7 +6,40 @@ export class ClientController {
 
   constructor() {
     this.clientService = new ClientService();
+  }
 
+  public getUserProfile = async (req: Request, res: Response, next: NextFunction) => {
+    const { username } = req.query;
+    const response = await this.clientService.getUserProfile(username);
+
+    if (response.statusCode === 200) return res.status(200).json(response);
+    next(response);
+    return;
+  };
+
+  public getUserProfileId = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.query;
+    const response = await this.clientService.getUserProfileId(id);
+
+    if (response.statusCode === 200) return res.status(200).json(response);
+    next(response);
+    return;
+  };
+
+  public updateUserProfile = async (req: Request, res: Response, next: NextFunction) => {
+    const response = await this.clientService.updateUserProfile(req.body);
+    
+    if (response.statusCode === 200) return res.status(200).json(response);
+    next(response);
+    return;
+  }
+  
+  public updateUserProfileId = async (req: Request, res: Response, next: NextFunction) => {
+    const response = await this.clientService.updateUserProfileId(req.body);
+
+    if (response.statusCode === 200) return res.status(200).json(response);
+    next(response);
+    return;
   }
 
   public readClient = async (req: Request, res: Response, next: NextFunction) => {
@@ -17,7 +50,7 @@ export class ClientController {
     next(response);
     return;
   };
-  
+
   public addFavorite = async (req: Request, res: Response, next: NextFunction) => {
     const response = await this.clientService.addFavorite(req.body);
 

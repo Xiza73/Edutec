@@ -55,4 +55,10 @@ User.methods.comparePassword = async function(password: string): Promise<boolean
     return await bcrypt.compare(password, this.password)
 }
 
+export const encryptPassword = async (password: string) => {
+    const salt = await bcrypt.genSalt(10);
+    const hash: string = await bcrypt.hash(password, salt)
+    return hash;
+}
+
 export default model<IUser>('User', User);

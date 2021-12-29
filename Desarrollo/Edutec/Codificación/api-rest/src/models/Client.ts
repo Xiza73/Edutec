@@ -1,10 +1,9 @@
 import { model, Schema, Document } from 'mongoose'
-import { ICourse } from './Course';
-const { ObjectId } = Schema.Types
 
 export interface IClient extends Document {
     _id: string,
     email: string,
+    aboutMe: string,
     favorites: string[],
 }
 
@@ -17,7 +16,12 @@ const Client = new Schema({
     favorites: [{
         type: String,
         required: false
-    }]
+    }],
+    aboutMe: {
+        type: String,
+        unique: false,
+        required: false
+    }
 }, { timestamps: true });
 
 
