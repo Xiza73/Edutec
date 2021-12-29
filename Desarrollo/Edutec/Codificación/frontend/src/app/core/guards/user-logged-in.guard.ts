@@ -19,7 +19,7 @@ export class UserLoggedInGuard implements CanActivate {
     const isAuthenticated = this.tokenService.isLogged();
 
     if (url === '/login' || url === '/register' || url === '/password-recovery'
-        || url === 'new-password') {
+        || url.startsWith('/new-password') ) {
         
       if (isAuthenticated) {
         this.router.navigate(['/']);

@@ -22,7 +22,7 @@ const routes: Routes = [
         component: PasswordRecoveryComponent
       },
       {
-        path: 'new-password',
+        path: 'new-password/:code',
         component: NewPasswordComponent
       }
     ]

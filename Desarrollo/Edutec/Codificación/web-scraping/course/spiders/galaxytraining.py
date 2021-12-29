@@ -3,6 +3,7 @@ from ..items import CourseItem
 
 
 class GalaxytrainingSpider(scrapy.Spider):
+    institution = 'Galaxy Training'
     name = 'galaxytraining'
     allowed_domains = ['online.galaxy.edu.pe']
     start_urls = ['https://online.galaxy.edu.pe/']
@@ -17,18 +18,25 @@ class GalaxytrainingSpider(scrapy.Spider):
     def parse_course(self, response):
         item = CourseItem()
 
-        schedule = response.xpath("//div/div/p/span[text()='date_range']/../text()").get()
-        price = response.xpath("//span[@itemprop='price']/text()").get()
+        schedule = response.xpath("//div/div/p/span[text()='date_range']/../text()").get(default='')
+        start = schedule[9:14].strip() + '/2022'  # 15/01
+        price = response.xpath("//span[@itemprop='price']/text()").get(default='')
 
         item['institutionName'] = 'Galaxy Training'
-        item['name'] = response.xpath("//h1[@itemprop='name']/text()").get().strip()
-        item['description'] = response.xpath("//div[@class='product-description']/p[1]/text()").get().strip()
-        item['image'] = response.xpath("//img[@class='js-modal-product-cover product-cover-modal']/@src").get().strip()
-        item['price'] = price[2:].strip()
+        item['name'] = response.xpath("//h1[@itemprop='name']/text()").get(default='')
+        item['description'] = response.xpath("//div[@class='product-description']/p[1]/text()").get(default='')
+        item['image'] = response.xpath("//img[@class='js-modal-product-cover product-cover-modal']/@src").get(default='')
+        item['price'] = (price[2:]).replace(',', '')
         item['currency'] = 'PEN'
-        item['start'] = schedule[9:14].strip()  # 15/01
-        item['duration'] = response.xpath("//div/div/p/span[text()='watch_later']/../text()").get().strip()
-        item['schedule'] = (schedule[15].upper() + schedule[16:]).strip()
-        item['url'] = response.request.meta['url'].strip()
+        item['start'] = self.__format_date(start)
+        item['duration'] = response.xpath("//div/div/p/span[text()='watch_later']/../text()").get(default='')
+        item['schedule'] = (schedule[15].upper() + schedule[16:])
+        item['url'] = response.request.meta['url']
 
         yield item
+
+    def __format_date(self, date):
+        values = date.split('/')
+
+        return f"{values[2]}/{values[1]}/{values[0]}"
+

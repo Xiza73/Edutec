@@ -148,5 +148,20 @@ export class CourseDAO {
     }
   };
 
+  public removeCourseByInstitution = async (institutionName: string) => {
+    try {
+      const institution = await Institution.findOne({name: institutionName});
+
+      if (!institution) {
+        return new ErrorHandler(400, "No se encontró la institución");
+      }
+
+      await Course.deleteMany({institution});
+
+      return new ResponseBase(200, "Cursos eliminado correctamente");
+    } catch (error) {
+      return new ErrorHandler(404, "Error al eliminar cursos");
+    }
+  }
 
 }

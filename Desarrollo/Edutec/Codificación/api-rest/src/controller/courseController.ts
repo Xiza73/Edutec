@@ -55,4 +55,13 @@ export class CourseController {
     next(response);
     return;
   };
+
+  public removeCourseByInstitution = async (req: Request, res: Response, next: NextFunction) => {
+    const { institutionName } = req.params;
+    const response = await this.courseService.removeCourseByInstitution(institutionName);
+
+    if (response.statusCode === 200) return res.status(200).json(response);
+    next(response);
+    return;
+  };
 }
