@@ -57,11 +57,10 @@ export class ClientController {
     if (response.statusCode === 200) return res.status(200).json(response);
     next(response);
     return;
-  };
+  }
 
   public removeFavorite = async (req: Request, res: Response, next: NextFunction) => {
     const response = await this.clientService.removeFavorite(req.body);
-
     if (response.statusCode === 200) return res.status(200).json(response);
     next(response);
     return;

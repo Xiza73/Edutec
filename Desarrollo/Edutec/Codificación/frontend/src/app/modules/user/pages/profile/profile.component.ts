@@ -50,11 +50,13 @@ export class ProfileComponent implements OnInit {
     this._clientService.getUserProfile(this.id).subscribe(
       (res) => {
         const { email, username, aboutMe } = res.body.data;
-        if (aboutMe) {
+        if(aboutMe){
           this.form.setValue({ email, username, aboutMe });
-        } else {
-          this.form.setValue({ email, username, aboutMe: '' });
+        }else{
+          this.form.setValue({ email, username, aboutMe: ""});
         }
+        
+        // this.username = username.slice();
       },
       (err) => {
         this.toastr.error(err.error.message, `Error: ${err.error.statusCode}`);
