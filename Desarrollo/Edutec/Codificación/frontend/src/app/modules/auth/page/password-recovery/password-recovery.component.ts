@@ -36,10 +36,14 @@ export class PasswordRecoveryComponent implements OnInit {
     const { email } = this.form.value;
     this.authService.sendRecoverEmail(email).subscribe(
       (res) => {
-        this.toastr.success(res.message, `OK: ${res.statusCode}`);
+        if (res.statusCode === 200) {
+          this.toastr.success('Por favor revise su bandeja de entrada', 'Correo enviado', {
+            timeOut: 6000
+          });
+        }
       },
       (err) => {
-        this.toastr.error(err.error.message, `Error: ${err.error.statusCode}`);
+        this.toastr.error(err.error.message, 'Error');
       }
     );
   }
@@ -47,5 +51,10 @@ export class PasswordRecoveryComponent implements OnInit {
   isValidEmail(): boolean {
     const formControl = this.form.get('email');
     return formControl?.errors?.email && formControl?.touched;
+  }
+
+  isRequiredField(field: string): boolean {
+    const formControl = this.form.get(field);
+    return formControl?.errors?.required && formControl?.touched;
   }
 }

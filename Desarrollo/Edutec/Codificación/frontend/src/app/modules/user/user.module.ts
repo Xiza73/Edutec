@@ -18,12 +18,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CommonModule,
     UserRoutingModule,
     ReactiveFormsModule,
-<<<<<<< HEAD
     SharedModule,
     NgxSpinnerModule
-=======
-    SharedModule
->>>>>>> 71e6abc8c301983af1cf9be75a5128ea1075efee
   ]
 })
 export class UserModule { }
