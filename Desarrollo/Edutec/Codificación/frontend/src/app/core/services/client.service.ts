@@ -17,7 +17,7 @@ export class ClientService {
     if (username) {
       params = params.append('username', username);
     }
-    return this.httpClient.get<any>(this.apiUrl + '/client', { observe: "response", params });
+    return this.httpClient.get<any>(this.apiUrl + '/client/profile', { observe: "response", params });
   }
 
   public updateUserProfile(body: any): Observable<any> {
