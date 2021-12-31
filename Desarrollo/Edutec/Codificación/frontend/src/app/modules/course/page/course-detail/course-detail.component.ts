@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { CourseService } from 'src/app/data/services/course.service';
 import { switchMap, tap } from 'rxjs/operators';
@@ -32,7 +32,8 @@ export class CourseDetailComponent implements OnInit {
     private institutionService: InstitutionService,
     private clientService: ClientService,
     private tokenService: TokenService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -65,6 +66,7 @@ export class CourseDetailComponent implements OnInit {
         },
         err => {
           this.toastr.error(err.error.message, 'Error');
+          this.router.navigate(['/cursos/busqueda']);
         }
       );
   }

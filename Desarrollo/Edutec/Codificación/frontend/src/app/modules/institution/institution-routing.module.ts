@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CourseDetailComponent } from './page/course-detail/course-detail.component';
-import { CourseSearchComponent } from './page/course-search/course-search.component';
+import { InstitutionDetailComponent } from './page/institution-detail/institution-detail.component';
+import { InstitutionSearchComponent } from './page/institution-search/institution-search.component';
 
 const routes: Routes = [
   {
@@ -9,11 +9,11 @@ const routes: Routes = [
     children: [
       {
         path: 'busqueda',
-        component: CourseSearchComponent
+        component: InstitutionSearchComponent
       },
       {
         path: 'detalle/:id',
-        component: CourseDetailComponent
+        component: InstitutionDetailComponent
       },
       {
         path: '**',
@@ -27,4 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CourseRoutingModule { }
+export class InstitutionRoutingModule { }

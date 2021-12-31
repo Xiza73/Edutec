@@ -21,6 +21,10 @@ const routes: Routes = [
         path: 'usuario',
         canActivate: [ UserLoggedInGuard ],
         loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
+      },
+      {
+        path: 'instituciones',
+        loadChildren: () => import('./modules/institution/institution.module').then(m => m.InstitutionModule)
       }
     ]
   },
@@ -29,6 +33,10 @@ const routes: Routes = [
     canActivate: [ UserLoggedInGuard ],
     component: AuthLayoutComponent,
     loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];
 
