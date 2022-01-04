@@ -17,7 +17,8 @@ export class InstitutionController {
   };
 
   public readInstitutions = async (req: Request, res: Response, next: NextFunction) => {
-    const response = await this.institutionService.readInstitutions();
+    const name = req.query.name as string;
+    const response = await this.institutionService.readInstitutions(name);
 
     if (response.statusCode === 200) return res.status(200).json(response);
     next(response);
