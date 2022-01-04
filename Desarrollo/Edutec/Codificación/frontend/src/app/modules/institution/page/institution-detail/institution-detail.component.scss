@@ -1,0 +1,62 @@
+$img-width: 200px;
+
+.img-container img {
+  width: $img-width;
+  margin-left: 100px;
+  margin-bottom: 50px;
+}
+
+.institution-container{
+  .institution-data{
+    strong {
+      font-weight: bold;
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      padding-left: 1rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+    a {
+      text-decoration: none;
+    }
+    a:hover{
+      color: gray;
+    }
+    .contacto {
+      display: flex;
+      #facebook{
+          color: blue;
+          margin-left: 10px;
+          cursor: pointer;
+      }
+      #twitter{
+          color: lightblue;
+          margin-left: 10px;
+          cursor: pointer;
+      }
+      #instagram{
+          color: orange;
+          margin-left: 10px;
+          cursor: pointer;
+      }    
+    }
+    .institution-description {
+      margin-top: 10px;
+      margin-left: 100px;
+      h1 {
+        font-size: 2rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+  
+
+
