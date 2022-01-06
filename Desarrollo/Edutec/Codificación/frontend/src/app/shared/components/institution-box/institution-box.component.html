@@ -1,0 +1,14 @@
+<div [routerLink]="['/instituciones/busqueda', institution._id]" class="card mb-4 institution-container"
+  style="width: 230px">
+  <img src="https://sitiocero.net/wp-content/uploads/2019/11/00-licencia_instituciones.png" class="card-img-top"
+    alt="..." />
+  <!--[src]="institution.image">-->
+  <div class="card-body">
+    <h5 class="card-title mx-auto text-center">{{ institution.name | summarize:30 }}</h5>
+    <p class="card-text">
+      {{ institution.description === '' ? 'Sin descripción' : institution.description | summarize:100 }}
+    </p>
+    <p class="m-0 p-0 fw-bold text-primary">{{ institution.url }}</p>
+
+  </div>
+</div>

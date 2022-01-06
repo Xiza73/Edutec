@@ -1,1 +1,29 @@
-<p>institution-search works!</p>
+<div class="col-10 mb-5 p-0">
+  <p class="fw-bold px-2 pt-3">
+    <fa-icon [icon]="faInstitution"></fa-icon>
+    <span class="px-1"> Nombre de la institución </span>
+  </p>
+  <form [formGroup]="form" (submit)="findInstitution()">
+    <div class="form-group d-flex border rounded p-2">
+      <input formControlName="name" type="text" class="form-control" placeholder="Institución o palabra clave" />
+      <button type="submit" class="btn btn-primary">
+        Buscar
+      </button>
+    </div>
+  </form>
+</div>
+<!-- Institutions container -->
+<div *ngIf="institutions.length === 0" class="position-relative spinner-container">
+  <ngx-spinner [fullScreen]="false" color="#e95420" type="ball-beat" size="medium">
+  </ngx-spinner>
+</div>
+
+<div *ngIf="institutions.length > 0" class="d-flex justify-content-between align-items-center flex-wrap pt-4">
+  <div *ngFor="let item of institutions">
+    <app-institution-box [institution]="item"></app-institution-box>
+  </div>
+</div>
+
+<div *ngIf="total === 0" class="d-flex flex-column align-items-center mt-4">
+  <p>No se encontró la institución.</p>
+</div>
