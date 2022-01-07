@@ -11,8 +11,8 @@ export class InstitutionService {
     return await this.institutionDAO.addInstitution(body);
   };
 
-  public readInstitutions = async () => {
-    return await this.institutionDAO.readInstitutions();
+  public readInstitutions = async (name: string) => {
+    return await this.institutionDAO.readInstitutions(name);
   };
 
   public readInstitution = async (id: string) => {

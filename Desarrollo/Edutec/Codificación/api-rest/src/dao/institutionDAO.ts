@@ -17,9 +17,14 @@ export class InstitutionDAO {
     }
   };
 
-  public readInstitutions = async () => {
+  public readInstitutions = async (name: string) => {
     try {
-      const data = await Institution.find();
+      let data;
+      if (name) {
+        data = await Institution.find({ name: {$regex: new RegExp(name, 'i')} });
+      } else {
+        data = await Institution.find();
+      }
       return new ResponseData(200, "Instituciones obtenidas correctamente", data);
     } catch (error) {
       return new ErrorHandler(404, "Error al obtener instituciones");
