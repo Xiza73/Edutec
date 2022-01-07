@@ -13,11 +13,9 @@ export class InstitutionService {
     private httpClient: HttpClient
   ) { }
 
-  public readInstitutions(name: string, field: string, sort: string): Observable<any> {
+  public readInstitutions(name: string): Observable<any> {
     const params = new HttpParams()
-      .set('name', name)
-      .set('field', field)
-      .set('sort', sort);
+      .set('name', name);
 
     return this.httpClient.get(this.apiUrl + '/institution', {params});
   }

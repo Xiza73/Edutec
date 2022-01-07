@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClientService } from 'src/app/core/services/client.service';
 import { TokenService } from 'src/app/core/services/token.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,6 +13,7 @@ import { TokenService } from 'src/app/core/services/token.service';
 export class ProfileComponent implements OnInit {
   public isLogged: boolean = false;
   public username: string = '';
+  public aboutMe: string = '';
   public id: string | null = '';
   public form = new FormGroup({
     email: new FormControl({ disabled: true }, [
@@ -21,9 +23,12 @@ export class ProfileComponent implements OnInit {
     ]),
     username: new FormControl('', [
       Validators.required,
+      Validators.minLength(3),
       Validators.maxLength(50),
     ]),
-    aboutMe: new FormControl('', [Validators.required]),
+    aboutMe: new FormControl('', [
+      Validators.maxLength(240)
+    ]),
   });
 
   constructor(
@@ -56,10 +61,11 @@ export class ProfileComponent implements OnInit {
           this.form.setValue({ email, username, aboutMe: ""});
         }
         
-        // this.username = username.slice();
+        this.username = username;
+        this.aboutMe = aboutMe;
       },
       (err) => {
-        this.toastr.error(err.error.message, `Error: ${err.error.statusCode}`);
+        this.toastr.error(err.error.message, 'Error');
       }
     );
   }
@@ -69,19 +75,41 @@ export class ProfileComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
+
     const body = {
       username: this.form.value.username,
       aboutMe: this.form.value.aboutMe,
-      id: this.id,
+      prevUsername: this.username
     };
+
+    if (this.username === body.username && this.aboutMe === body.aboutMe) {
+      this.toastr.info('No hay datos que actualizar', 'Perfil')
+      return;
+    }
+
     this._clientService.updateUserProfile(body).subscribe(
       (res) => {
-        this.toastr.success(res.message, `OK: ${res.statusCode}`);
+        this.toastr.success(res.message, 'Éxito');
         this.getData();
       },
       (err) => {
-        this.toastr.error(err.error.message, `Error: ${err.error.statusCode}`);
+        this.toastr.error(err.error.message, 'Error');
       }
     );
+  }
+
+  isRequiredField(field: string): boolean {
+    const formControl = this.form.get(field);
+    return formControl?.errors?.required && formControl?.touched;
+  }
+
+  isMaxLengthExceeded(field: string): boolean {
+    const formControl = this.form.get(field);
+    return formControl?.errors?.maxlength && formControl?.touched; 
+  }
+
+  isMinLengthInvalid(field: string): boolean {
+    const formControl = this.form.get(field);
+    return formControl?.errors?.minlength && formControl?.touched;
   }
 }

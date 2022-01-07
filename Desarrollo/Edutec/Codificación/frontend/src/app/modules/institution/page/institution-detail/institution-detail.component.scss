@@ -1,8 +1,12 @@
+@import "~swiper/css";
+@import "~swiper/css/pagination";
+@import "~swiper/css/navigation";
+
 $img-width: 200px;
 
-.img-container img {
-  width: $img-width;
-  margin-left: 100px;
+.img-container {
+  width: 200px;
+  height: 200px;
   margin-bottom: 50px;
 }
 
@@ -47,7 +51,7 @@ $img-width: 200px;
     }
     .institution-description {
       margin-top: 10px;
-      margin-left: 100px;
+      // margin-left: 100px;
       h1 {
         font-size: 2rem;
       }
