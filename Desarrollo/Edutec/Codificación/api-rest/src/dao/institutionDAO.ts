@@ -7,9 +7,9 @@ export class InstitutionDAO {
   constructor() {}
 
   public addInstitution = async (body: any) => {
-    const { name, description, url } = body;
+    const { name, description, url, social, email, logo } = body;
     try {
-      const institution: IInstitution = new Institution({name, description, url});
+      const institution: IInstitution = new Institution({name, description, url, social, email, logo});
       await institution.save();
       return new ResponseBase(200, "Institución creada correctamente");
     } catch (error) {

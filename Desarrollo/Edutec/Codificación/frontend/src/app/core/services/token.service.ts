@@ -48,7 +48,6 @@ export class TokenService {
     }
 
     const values = this._getTokenPayloadDecoded(token);
-    console.log(values)
     return values.id;
   }
 
@@ -59,7 +58,6 @@ export class TokenService {
     }
 
     const values = this._getTokenPayloadDecoded(token);
-    console.log(values)
     return values.personId;
   }
 

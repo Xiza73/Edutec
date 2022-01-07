@@ -21,6 +21,6 @@ export class ClientService {
   }
 
   public updateUserProfile(body: any): Observable<any> {
-    return this.httpClient.post<any>(this.apiUrl + '/client/profile/id', body, { observe: "body" });
+    return this.httpClient.post<any>(this.apiUrl + '/client/profile', body, { observe: "body" });
   }
 }

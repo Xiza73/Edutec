@@ -5,6 +5,8 @@ import User, { IUser } from "../models/User";
 import Client, { IClient } from "../models/Client";
 import Course from "../models/Course";
 
+import { s3, bucketName } from "../config/s3";
+
 export class ClientDAO {
   constructor() {}
 

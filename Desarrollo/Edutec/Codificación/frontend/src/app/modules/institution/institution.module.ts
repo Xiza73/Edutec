@@ -8,6 +8,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { SwiperModule } from "swiper/angular";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ReactiveFormsModule,
     FontAwesomeModule,
     SharedModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    SwiperModule
   ]
 })
 export class InstitutionModule { }
