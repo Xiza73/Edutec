@@ -3,7 +3,6 @@ import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClientService } from 'src/app/core/services/client.service';
 import { TokenService } from 'src/app/core/services/token.service';
-import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +22,6 @@ export class ProfileComponent implements OnInit {
     ]),
     username: new FormControl('', [
       Validators.required,
-      Validators.minLength(3),
       Validators.maxLength(50),
     ]),
     aboutMe: new FormControl('', [
