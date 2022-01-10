@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserLoggedInGuard } from './core/guards/user-logged-in.guard';
-import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
-import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
+import { AdminLayoutComponent } from './layout/layouts/admin-layout/admin-layout.component';
+import { AuthLayoutComponent } from './layout/layouts/auth-layout/auth-layout.component';
+import { ContentLayoutComponent } from './layout/layouts/content-layout/content-layout.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,11 @@ const routes: Routes = [
     canActivate: [ UserLoggedInGuard ],
     component: AuthLayoutComponent,
     loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
+  },
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
   },
   {
     path: '**',

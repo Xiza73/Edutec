@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ClientService } from 'src/app/core/services/client.service';
 import { TokenService } from 'src/app/core/services/token.service';
+import { ClientService } from 'src/app/data/services/client.service';
+import { Router } from '@angular/router';
+import { DataSharingService } from 'src/app/core/services/data-sharing.service';
 
 @Component({
   selector: 'app-profile',
@@ -32,7 +34,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private tokenService: TokenService,
     private toastr: ToastrService,
-    private _clientService: ClientService
+    private _clientService: ClientService,
+    private dataSharingService: DataSharingService
   ) {}
 
   ngOnInit(): void {
@@ -40,11 +43,6 @@ export class ProfileComponent implements OnInit {
   }
 
   public getData(): void {
-    this.isLogged = this.tokenService.isValidToken();
-    if (!this.isLogged) {
-      this.toastr.error('No se encuentra loggeado', 'Error');
-      return;
-    }
     this.id = this.tokenService.getIdFromToken();
     if (!this.id) {
       this.toastr.error('Error al encontrar usuario', 'Error');
@@ -53,9 +51,9 @@ export class ProfileComponent implements OnInit {
     this._clientService.getUserProfile(this.id).subscribe(
       (res) => {
         const { email, username, aboutMe } = res.body.data;
-        if(aboutMe){
+        if (aboutMe) {
           this.form.setValue({ email, username, aboutMe });
-        }else{
+        } else {
           this.form.setValue({ email, username, aboutMe: ""});
         }
         
@@ -88,6 +86,7 @@ export class ProfileComponent implements OnInit {
     this._clientService.updateUserProfile(body).subscribe(
       (res) => {
         this.toastr.success(res.message, 'Éxito');
+        this.dataSharingService.username.next(body.username);
         this.getData();
       },
       (err) => {

@@ -39,7 +39,15 @@ export class ClientDAO {
     try {
       if (!username || !aboutMe || !prevUsername)
         return new ErrorHandler(400, "Error al obtener los datos");
-      const user: (IUser & { _id: any }) | null = await User.findOne({
+
+      let user: (IUser & { _id: any }) | null = await User.findOne({
+        username,
+      });
+      if (user) {
+        return new ErrorHandler(422, "El nombre de usuario ya está registrado");
+      }
+
+      user = await User.findOne({
         username: prevUsername,
       });
       if (!user)
@@ -79,7 +87,15 @@ export class ClientDAO {
     try {
       if (!username || !aboutMe || !id)
         return new ErrorHandler(400, "Error al obtener los datos");
-      const user: (IUser & { _id: any }) | null = await User.findById(id);
+
+      let user: (IUser & { _id: any }) | null = await User.findOne({
+        username,
+      });
+      if (user) {
+        return new ErrorHandler(422, "El nombre de usuario ya está registrado");
+      }
+
+      user = await User.findById(id);
       if (!user)
         return new ErrorHandler(400, "Datos de usuario no encontrados");
       await User.findOneAndUpdate({ _id: id }, { username });

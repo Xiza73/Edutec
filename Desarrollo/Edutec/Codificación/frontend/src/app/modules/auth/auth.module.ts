@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
-import { LoginComponent } from './page/login/login.component';
-import { RegisterComponent } from './page/register/register.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PasswordRecoveryComponent } from './page/password-recovery/password-recovery.component';
-import { NewPasswordComponent } from './page/new-password/new-password.component';
+import { PasswordRecoveryComponent } from './pages/password-recovery/password-recovery.component';
+import { NewPasswordComponent } from './pages/new-password/new-password.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { NewPasswordComponent } from './page/new-password/new-password.component
     CommonModule,
     AuthRoutingModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxSpinnerModule
   ]
 })
 export class AuthModule { }

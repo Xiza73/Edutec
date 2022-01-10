@@ -28,17 +28,7 @@ export class TokenService {
     }
 
     const values = this._getTokenPayloadDecoded(token);
-
     return !this._tokenExpired(values.exp);
-  }
-
-  public getUsernameFromToken(): string | null {
-    const token = this.getToken();
-    if (!token) {
-      return null;
-    }
-    const values = this._getTokenPayloadDecoded(token);
-    return values.username;
   }
 
   public getIdFromToken(): string | null {
