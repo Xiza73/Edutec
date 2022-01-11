@@ -16,6 +16,7 @@ export class AuthRouter {
 
   private _configure(): void {
     this._router.post('/signin', this._controller.signIn);
+    this._router.post('/create', this._controller.createUser);
     this._router.post('/signup', this._controller.signUp);
     this._router.post('/recover', this._controller.sendRecoverEmail);
     this._router.post('/reset', this._controller.changePassword);

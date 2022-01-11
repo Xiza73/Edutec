@@ -39,6 +39,11 @@ const User = new Schema({
         type: String,
         required: true,
         enum: ['Client', 'Admin']
+    },
+    status: {
+        type: Number,
+        required: false,
+        default: 1,
     }
 }, { timestamps: true });
 
