@@ -51,6 +51,16 @@ export class TokenService {
     return values.personId;
   }
 
+  public getRoleIdFromToken(): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    const values = this._getTokenPayloadDecoded(token);
+    return values.role;
+  }
+
   public isLogged(): boolean {
     if (this.getToken() && this.isValidToken()) {
       return true;

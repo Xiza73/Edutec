@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { DataSharingService } from 'src/app/core/services/data-sharing.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { ClientService } from 'src/app/data/services/client.service';
+import { RoleService } from 'src/app/data/services/role.service';
 import { User } from 'src/app/data/types/user';
 
 @Component({
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
     password: ['', [ Validators.required, Validators.minLength(3) ]]
   });
 
-  errors: any;
+  role: string = '';
 
   @ViewChild('submitButton') submitButton!: ElementRef<HTMLButtonElement>;
 
@@ -38,7 +39,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private dataSharingService: DataSharingService,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private roleService: RoleService
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +63,13 @@ export class LoginComponent implements OnInit {
           this.tokenService.setToken(response.token);
         }),
         switchMap(() => {
+          const roleId = this.tokenService.getRoleIdFromToken();
+          return this.roleService.readRole(roleId!);
+        }),
+        tap(response => {
+          this.role = response.data.description;
+        }),
+        switchMap(() => {
           const id = this.tokenService.getIdFromToken()!;
           return this.clientService.getUserProfile(id);
         })
@@ -69,16 +78,21 @@ export class LoginComponent implements OnInit {
         response => {
           const { username } = response.body.data
           this.dataSharingService.username.next(username);
-          this.router.navigate(['/']);
+
+          if (this.role === 'client') {
+            this.router.navigate(['/']);
+          } else {
+            this.router.navigate(['/admin']);
+          }
         },
         err => {
           this.toastr.error(err.error.message, 'Error');
           this.tokenService.removeToken();
-        },
-        () => {
-          this.submitButton.nativeElement.disabled = false;
         }
-      );
+      )
+      .add(() => {
+        this.submitButton.nativeElement.disabled = false;
+      });
   }
 
   isRequiredField(field: string): boolean {

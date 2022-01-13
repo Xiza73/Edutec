@@ -4,7 +4,7 @@ import { ClientRouter } from './routes/clientRouter';
 import { CourseRouter } from './routes/courseRouter';
 import { InstitutionRouter } from './routes/institutionRouter';
 import { PrivateRouter } from './routes/privateRouter'
-import { RoleRouter } from './routes/rolesRouter';
+import { RoleRouter } from './routes/roleRouter';
 import { UserRouter } from './routes/userRouter';
 
 export class Routes {

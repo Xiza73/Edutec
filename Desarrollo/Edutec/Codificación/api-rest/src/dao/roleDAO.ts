@@ -16,8 +16,7 @@ export class RoleDAO {
     }
   };
 
-  public getRole = async (body: any) => {
-    const { id } = body;
+  public getRole = async (id: string) => {
     try {
       const data = await Role.findById(id);
       return new ResponseData(200, "Rol obtenido correctamente", data);

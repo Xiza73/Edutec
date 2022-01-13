@@ -130,27 +130,28 @@ export class CourseSearchComponent implements OnInit {
 
     this.setOrderOptions(this.form.value.option);
 
-    this.searchService.searchCourses(this.form.value.searchTerm, this.field, this.sort).subscribe(
-      response => {
-        this.courses = response.data;
-        this.total = this.courses.length;
-        this.searchTerm = this.form.value.searchTerm;
-        
-        this.numberPages = Math.ceil(this.total / this.pageSize);
-        this.coursesToShow = this.courses.slice(0, this.pageSize);
-      },
-      err => {
-        this.toastr.error(err.error.message, 'Error');
-        this.total = 0;
-      },
-      () => {
+    this.searchService.searchCourses(this.form.value.searchTerm, this.field, this.sort)
+      .subscribe(
+        response => {
+          this.courses = response.data;
+          this.total = this.courses.length;
+          this.searchTerm = this.form.value.searchTerm;
+          
+          this.numberPages = Math.ceil(this.total / this.pageSize);
+          this.coursesToShow = this.courses.slice(0, this.pageSize);
+        },
+        err => {
+          this.toastr.error(err.error.message, 'Error');
+          this.total = 0;
+        }
+      )
+      .add(() => {
         this.spinner.hide();
         if (this.total > 0) {
           this.searchService.saveSearch(this.form.value.searchTerm);
           this.getCourseSearchHistory();
         }
-      }
-    );
+      });
   }
 
   private getCourseSearchHistory(): void {

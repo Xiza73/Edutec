@@ -11,8 +11,8 @@ export class RoleService {
     return await this.roleDAO.addRole(description);
   };
   
-  public getRole = async (body: any) => {
-    return await this.roleDAO.getRole(body);
+  public getRole = async (id: string) => {
+    return await this.roleDAO.getRole(id);
   };
 
   public readRoles = async () => {

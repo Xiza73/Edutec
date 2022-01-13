@@ -19,6 +19,7 @@ export class InstitutionService {
 
     return this.httpClient.get(this.apiUrl + '/institution', {params});
   }
+  
   public readInsitution(id: string): Observable<any> {
     return this.httpClient.get(this.apiUrl + `/institution/${id}`);
   }

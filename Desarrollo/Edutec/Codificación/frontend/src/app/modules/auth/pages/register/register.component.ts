@@ -44,20 +44,22 @@ export class RegisterComponent implements OnInit {
     const user: User = this.form.value;
 
     this.submitButton.nativeElement.disabled = true;
-    this.authService.singup(user).subscribe(
-      response => {
-        if (response.statusCode) {
-          this.toastr.success('Inicie sesión', 'Registro exitoso');
+    this.authService.singup(user)
+      .subscribe(
+        response => {
+          if (response.statusCode) {
+            this.toastr.success('Inicie sesión', 'Registro exitoso');
+          }
+          this.router.navigate(['/login']);
+        },
+        err => {
+          this.toastr.error(err.error.message, 'Error');
+          this.submitButton.nativeElement.disabled = false;
         }
-        this.router.navigate(['/login']);
-      },
-      err => {
-        this.toastr.error(err.error.message, 'Error');
-      },
-      () => {
+      )
+      .add(() => {
         this.submitButton.nativeElement.disabled = false;
-      }
-    );
+      });
   }
 
   isRequiredField(field: string): boolean {

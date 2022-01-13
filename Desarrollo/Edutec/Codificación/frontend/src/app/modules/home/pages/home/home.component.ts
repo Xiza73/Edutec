@@ -30,17 +30,16 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.courseService.readCourses('', 'start', '-1').subscribe(
-      response => {
-        this.courses = response.data.slice(0, 4);
-      },
-      err => {
-        this.toastr.error(err.error.message, 'Error');
-      },
-      () => {
-        this.spinner.hide();
-      }
-    );
+    this.courseService.readCourses('', 'start', '-1')
+      .subscribe(
+        response => {
+          this.courses = response.data.slice(0, 4);
+        },
+        err => {
+          this.toastr.error(err.error.message, 'Error');
+        }
+      )
+      .add(() => this.spinner.hide());
   }
 
   findCourse(): void {

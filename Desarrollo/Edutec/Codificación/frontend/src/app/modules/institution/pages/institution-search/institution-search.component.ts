@@ -82,22 +82,21 @@ export class InstitutionSearchComponent implements OnInit {
     this.total = -1;
     this.spinner.show();
 
-    this.searchService.searchInstitutions(this.form.value.name).subscribe(
-      response => {
-        this.institutions = response.data;
-        this.total = this.institutions.length;
+    this.searchService.searchInstitutions(this.form.value.name)
+      .subscribe(
+        response => {
+          this.institutions = response.data;
+          this.total = this.institutions.length;
 
-        this.numberPages = Math.ceil(this.total / this.pageSize);
-        this.institutionsToShow = this.institutions.slice(0, this.pageSize);
-      },
-      err => {
-        this.toastr.error(err.error.message, 'Error');
-        this.total = 0;
-      },
-      () => {
-        this.spinner.hide();
-      }
-    )
+          this.numberPages = Math.ceil(this.total / this.pageSize);
+          this.institutionsToShow = this.institutions.slice(0, this.pageSize);
+        },
+        err => {
+          this.toastr.error(err.error.message, 'Error');
+          this.total = 0;
+        },
+      )
+      .add(() => this.spinner.hide());
   }
 
 }

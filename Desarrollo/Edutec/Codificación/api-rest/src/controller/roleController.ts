@@ -17,7 +17,8 @@ export class RoleController {
   };
 
   public getRole = async (req: Request, res: Response, next: NextFunction) => {
-    const response = await this.roleService.getRole(req.body);
+    const { id } = req.params;
+    const response = await this.roleService.getRole(id);
 
     if (response.statusCode === 200) return res.status(200).json(response);
     next(response);

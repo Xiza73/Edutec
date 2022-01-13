@@ -42,23 +42,24 @@ export class PasswordRecoveryComponent implements OnInit {
     const { email } = this.form.value;
     this.submitButton.nativeElement.disabled = true;
     this.spinner.show();
-    this.authService.sendRecoverEmail(email).subscribe(
-      (res) => {
-        if (res.statusCode === 200) {
-          this.toastr.success('Por favor revise su bandeja de entrada.', 'Correo enviado', {
-            timeOut: 6000
-          });
-          this.router.navigate(['/login']);
+    this.authService.sendRecoverEmail(email)
+      .subscribe(
+        (res) => {
+          if (res.statusCode === 200) {
+            this.toastr.success('Por favor revise su bandeja de entrada.', 'Correo enviado', {
+              timeOut: 6000
+            });
+            this.router.navigate(['/login']);
+          }
+        },
+        (err) => {
+          this.toastr.error(err.error.message, 'Error');
         }
-      },
-      (err) => {
-        this.toastr.error(err.error.message, 'Error');
-      },
-      () => {
+      )
+      .add(() => {
         this.submitButton.nativeElement.disabled = false;
         this.spinner.hide();
-      }
-    );
+      });
   }
 
   isValidEmail(): boolean {
