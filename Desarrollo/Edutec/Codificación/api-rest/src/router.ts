@@ -5,6 +5,7 @@ import { CourseRouter } from './routes/courseRouter';
 import { InstitutionRouter } from './routes/institutionRouter';
 import { PrivateRouter } from './routes/privateRouter'
 import { RoleRouter } from './routes/rolesRouter';
+import { UserRouter } from './routes/userRouter';
 
 export class Routes {
   private readonly _router: Router = Router();
@@ -14,6 +15,7 @@ export class Routes {
   private readonly _institutionRoute: InstitutionRouter = new InstitutionRouter();
   private readonly _courseRoute: CourseRouter = new CourseRouter();
   private readonly _clientRoute: ClientRouter = new ClientRouter();
+  private readonly _userRoute: UserRouter = new UserRouter();
 
   constructor () {
     this._configure()
@@ -35,5 +37,6 @@ export class Routes {
     this._router.use('/api/institution', this._institutionRoute.router);
     this._router.use('/api/course', this._courseRoute.router);
     this._router.use('/api/client', this._clientRoute.router);
+    this._router.use('/api/user', this._userRoute.router);
   }
 }

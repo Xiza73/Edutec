@@ -7,6 +7,7 @@ import ResponseBase from "../helpers/ResponseBase";
 import Role from "../models/Role";
 import { IRole } from "../models/Role";
 import ResponseData from "../helpers/ResponseData";
+import Admin, { IAdmin } from "../models/Admin";
 
 export class ResponseLogin {
   constructor(
@@ -24,6 +25,7 @@ export class AuthDAO {
       {
         id: user._id,
         personId: user.person._id,
+        role: user.role,
       },
       config.jwtSecret,
       {
@@ -73,6 +75,56 @@ export class AuthDAO {
     }
   };
 
+  public createUser = async (request: any) => {
+    //register for admins
+    const { username, roleId, password, name, email, description } = request;
+    try {
+      if (!username || !email || !password || !roleId || !name)
+        return new ErrorHandler(400, "Faltan datos");
+
+      const user: (IUser & { _id: any }) | null = await User.findOne({
+        username,
+      });
+      if (user) {
+        return new ErrorHandler(422, "El usuario ya está registrado");
+      }
+
+      const role: (IRole & { _id: any }) | null = await Role.findById(
+        roleId
+      ).exec();
+
+      if (!role) return new ErrorHandler(400, "No se encontró el rol");
+
+      let newAdmin: (IAdmin & { _id: any }) | null = await Admin.findOne(
+        { email },
+        { _id: 1 }
+      ).exec();
+
+      if (newAdmin) {
+        let use: (IUser & { _id: any }) | null = await User.findOne({
+          person: newAdmin._id,
+        });
+        if (use) return new ErrorHandler(422, "El usuario ya está registrado");
+      } else {
+        newAdmin = new Admin({ name, email, description });
+        await newAdmin.save();
+      }
+
+      const newUser = new User({
+        username,
+        password,
+        person: newAdmin._id,
+        role: role._id,
+        onPerson: "Admin",
+      });
+      await newUser.save();
+
+      return new ResponseBase(200, "Usuario registrado correctamente");
+    } catch (err) {
+      return new ErrorHandler(400, "Error al registrar usuario");
+    }
+  };
+
   public signUp = async (request: any) => {
     //register for clients
     const { username, email, password } = request;
@@ -88,7 +140,7 @@ export class AuthDAO {
       }
 
       const role: (IRole & { _id: any }) | null = await Role.findOne(
-        { name: "client" },
+        { description: "client" },
         { _id: 1 }
       ).exec();
 

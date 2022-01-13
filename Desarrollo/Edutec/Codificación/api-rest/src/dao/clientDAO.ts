@@ -85,7 +85,7 @@ export class ClientDAO {
   public updateUserProfileId = async (body: any) => {
     const { username, aboutMe, id } = body;
     try {
-      if (!username || !aboutMe || !id)
+      if (!username || !id)
         return new ErrorHandler(400, "Error al obtener los datos");
 
       let user: (IUser & { _id: any }) | null = await User.findOne({
