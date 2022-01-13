@@ -15,6 +15,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatMenuModule} from '@angular/material/menu';
 import{ MatInputModule} from  '@angular/material/input'
 import { MatSortModule } from '@angular/material/sort';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
+
 
 @NgModule({
   declarations: [
@@ -34,7 +40,12 @@ import { MatSortModule } from '@angular/material/sort';
     MatPaginatorModule,
     MatMenuModule,
     MatInputModule,
-    MatSortModule
+    MatSortModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatSlideToggleModule,
+    ReactiveFormsModule,
+    FormsModule 
   ]
 })
 export class AdminModule { }

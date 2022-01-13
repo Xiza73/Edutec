@@ -1,4 +1,58 @@
-<div>
-  <p>Crear formulario</p>
-  
+<h3>Agregar un nuevo usuario</h3>
+<div class="container">
+  <!--Nombre-->
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre</mat-label>
+    <input matInput placeholder="Patricia" [formControl]="name" required>
+    <mat-icon matSuffix>perm_identity</mat-icon>
+    <mat-error *ngIf="name.invalid">{{nameErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <!--Username-->
+  <mat-form-field appearance="outline">
+    <mat-label>Ingrese el username</mat-label>
+    <input matInput #input maxlength="50" placeholder="patricia21" [formControl]="username" required>
+    <mat-icon matSuffix>account_circle</mat-icon>
+    <mat-hint>{{input.value?.length || 0}}/50</mat-hint>
+    <mat-error *ngIf="username.invalid">{{usernameErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <!--Email-->
+  <mat-form-field appearance="outline">
+    <mat-label>Ingresa tu email</mat-label>
+    <input matInput placeholder="pat@example.com" [formControl]="email" required>
+    <mat-icon matSuffix>markunread</mat-icon>
+    <mat-error *ngIf="email.invalid">{{emailErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <!--password-->
+  <mat-form-field appearance="outline">
+    <mat-label>Ingresa la contraseña</mat-label>
+    <input matInput #psw maxlength="20" minlenght="3" [type]="hide ? 'password' : 'text'" [formControl]="password"
+      required>
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+    <mat-hint>{{psw.value?.length || 0}}/20</mat-hint>
+    <mat-error *ngIf="password.invalid">{{pswdErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <!--Rol-->
+  <mat-form-field appearance="outline">
+    <mat-label>Rol</mat-label>
+    <input type="text" placeholder="Elije uno" aria-label="rol" matInput [formControl]="role" [matAutocomplete]="auto"
+      required>
+    <mat-icon matSuffix>badge</mat-icon>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of options" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="role.invalid">{{rolErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <!--Estado-->
+  <div class="mat-form-field">
+    <p>Estado</p>
+    <mat-slide-toggle [(ngModel)]="isChecked" color="warn">{{isEnabled()}}</mat-slide-toggle>
+  </div>
+  <!--boton guardar-->
+  <button mat-raised-button class="bg-primary text-white">Guardar</button>
+
 </div>
