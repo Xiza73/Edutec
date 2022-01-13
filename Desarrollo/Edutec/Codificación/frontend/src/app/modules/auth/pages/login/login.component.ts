@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -29,6 +29,8 @@ export class LoginComponent implements OnInit {
 
   errors: any;
 
+  @ViewChild('submitButton') submitButton!: ElementRef<HTMLButtonElement>;
+
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
@@ -51,6 +53,7 @@ export class LoginComponent implements OnInit {
 
     const user: User = this.form.value;
 
+    this.submitButton.nativeElement.disabled = true;
     this.authService.login(user)
       .pipe(
         tap(response => {
@@ -71,6 +74,9 @@ export class LoginComponent implements OnInit {
         err => {
           this.toastr.error(err.error.message, 'Error');
           this.tokenService.removeToken();
+        },
+        () => {
+          this.submitButton.nativeElement.disabled = false;
         }
       );
   }
