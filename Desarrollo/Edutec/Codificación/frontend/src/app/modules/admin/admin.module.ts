@@ -10,6 +10,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CreateEditUserComponent } from './components/create-edit-user/create-edit-user.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatMenuModule} from '@angular/material/menu';
+import{ MatInputModule} from  '@angular/material/input'
+import { MatSortModule } from '@angular/material/sort';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
 
 
 @NgModule({
@@ -25,7 +35,17 @@ import { CreateEditUserComponent } from './components/create-edit-user/create-ed
     MatIconModule,
     MatButtonModule,
     MatDividerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatMenuModule,
+    MatInputModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatSlideToggleModule,
+    ReactiveFormsModule,
+    FormsModule 
   ]
 })
 export class AdminModule { }
