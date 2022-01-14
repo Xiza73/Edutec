@@ -39,26 +39,39 @@ export class AuthDAO {
       const { username, email, password } = request;
 
       let user: (IUser & { _id: any }) | null = null;
+      let person: { _id: any } | null = null; 
 
       if (username && password) {
         user = await User.findOne({
           username,
         });
       } else if (email && password) {
-        const client: (IClient & { _id: any }) | null = await Client.findOne(
+        person = await Client.findOne(
           { email },
           { _id: 1 }
-        ).exec();
-        if (client)
+        );
+
+        if (!person) {
+          person = await Admin.findOne(
+            { email },
+            { _id: 1 }
+          );
+        }
+
+        if (person) {
           user = await User.findOne({
-            person: client._id,
+            person: person._id,
           });
+        } 
+   
       } else {
         return new ErrorHandler(400, "Faltan datos");
       }
 
-      if (!user)
+      if (!person)
         return new ErrorHandler(422, "El usuario no se encuentra registrado");
+      if (!user)
+        return new ErrorHandler(422, "Correo y/o contraseña incorrectas");
 
       const match = await user.comparePassword(password);
       if (match) {

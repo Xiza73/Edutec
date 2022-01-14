@@ -7,6 +7,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { DataSharingService } from 'src/app/core/services/data-sharing.service';
 import { TokenService } from 'src/app/core/services/token.service';
+import { AdminService } from 'src/app/data/services/admin.service';
 import { ClientService } from 'src/app/data/services/client.service';
 import { RoleService } from 'src/app/data/services/role.service';
 import { User } from 'src/app/data/types/user';
@@ -40,7 +41,8 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService,
     private dataSharingService: DataSharingService,
     private clientService: ClientService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private adminService: AdminService
   ) { }
 
   ngOnInit(): void {
@@ -71,7 +73,10 @@ export class LoginComponent implements OnInit {
         }),
         switchMap(() => {
           const id = this.tokenService.getIdFromToken()!;
-          return this.clientService.getUserProfile(id);
+          if (this.role === 'client') {
+            return this.clientService.getUserProfile(id);
+          }
+          return this.adminService.getUserProfile(id);
         })
       )
       .subscribe(

@@ -20,7 +20,6 @@ export class NavComponent implements OnInit {
   constructor(
     private tokenService: TokenService,
     private router: Router,
-    private clientService: ClientService,
     private dataSharingService: DataSharingService
   ) { }
 
@@ -37,12 +36,6 @@ export class NavComponent implements OnInit {
         this.username = value;
       }
     );
-    // const id = this.tokenService.getIdFromToken()!;
-    // this.clientService.getUserProfile(id).subscribe(
-    //   response => {
-    //     this.username = response.body.data.username;
-    //   }
-    // );
   }
 
   goToProfile() {

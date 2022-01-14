@@ -48,9 +48,8 @@ export class CourseDetailComponent implements OnInit {
         switchMap(() => {
           if (!userId) {
             return of('unauthenticated');
-          } else {
-            return this.clientService.readClient(userId);
           }
+          return this.clientService.readClient(userId);
         })
       )
       .subscribe(

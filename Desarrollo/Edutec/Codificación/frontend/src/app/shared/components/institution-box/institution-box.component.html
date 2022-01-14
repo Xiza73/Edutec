@@ -6,7 +6,9 @@
          [class.img-default]="!institution.logo">
   </div>
   <div class="card-body">
-    <h5 class="card-title mx-auto text-center">{{ institution.name | summarize:30 }}</h5>
+    <h6 class="card-title mx-auto text-center">
+      <a [routerLink]="['/instituciones/detalle', institution._id]" class="h6 text-black fw-bold">{{ institution.name | summarize:30 }}</a>
+    </h6>
     <p class="card-text">
       {{ institution.description === '' ? 'Sin descripción' : institution.description | summarize:100 }}
     </p>
