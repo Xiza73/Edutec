@@ -33,26 +33,36 @@ export class ClientDAO {
     }
   };
 
-  public updateUserProfile = async (body: any) => {
-    const { username, aboutMe, prevUsername } = body;
+  public updateUserProfile = async (id: string, body: any) => {
+    const { username, aboutMe } = body;
     try {
-      if (!username || !aboutMe || !prevUsername)
+      if ((!username || !aboutMe) && aboutMe !== '')
         return new ErrorHandler(400, "Error al obtener los datos");
 
-      let user: (IUser & { _id: any }) | null = await User.findOne({
-        username,
+      const userToUpdate: (IUser & { _id: any }) | null = await User.findById(id);
+
+      if (!userToUpdate) {
+        return new ErrorHandler(400, "Datos de usuario no encontrados");
+      }
+
+      const clientToUpdate: (IClient & { _id: any }) | null = await Client.findOne({
+        _id: userToUpdate.person._id,
       });
-      if (user) {
+
+      if (!clientToUpdate) {
+        return new ErrorHandler(400, "Datos de cliente no encontrados");
+      }
+
+      const user = await User.findOne({
+        username
+      });
+
+      if (user && user.username !== userToUpdate.username) {
         return new ErrorHandler(422, "El nombre de usuario ya está registrado");
       }
 
-      user = await User.findOne({
-        username: prevUsername,
-      });
-      if (!user)
-        return new ErrorHandler(400, "Datos de usuario no encontrados");
-      await User.findOneAndUpdate({ username: prevUsername }, { username });
-      await Client.findOneAndUpdate({ _id: user.person._id }, { aboutMe });
+      await User.findOneAndUpdate({ _id: id }, { username });
+      await Client.findOneAndUpdate({ _id: userToUpdate.person._id }, { aboutMe });
 
       return new ResponseBase(200, "Datos actualizados correctamente");
     } catch (error) {

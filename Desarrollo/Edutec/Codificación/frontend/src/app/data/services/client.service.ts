@@ -39,7 +39,8 @@ export class ClientService {
     return this.httpClient.get<any>(this.apiUrl + '/client/profile/id', { observe: "response", params });
   }
 
-  public updateUserProfile(body: any): Observable<any> {
-    return this.httpClient.post<any>(this.apiUrl + '/client/profile', body, { observe: "body" });
+  public updateUserProfile(id: string, body: any): Observable<any> {
+    console.log(body);
+    return this.httpClient.put<any>(this.apiUrl + `/client/profile/${id}`, body, { observe: "body" });
   }
 }

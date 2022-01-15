@@ -15,6 +15,10 @@
             class="text-start text-danger fw-bold mt-1 error">
         Nombre de usuario requerido
       </div>
+      <div *ngIf="isPatternValid('username')"
+           class="text-start text-danger fw-bold mt-1 error">
+        Solo letras o números
+      </div>
       <div *ngIf="isMaxLengthExceeded('username')"
            class="text-start text-danger fw-bold mt-1 error">
         No se debe exceder los 50 caracteres

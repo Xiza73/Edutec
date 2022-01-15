@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
     username: new FormControl('', [
       Validators.required,
       Validators.maxLength(50),
+      Validators.pattern("[A-Za-z0-9]+")
     ]),
     aboutMe: new FormControl('', [
       Validators.maxLength(240)
@@ -74,8 +75,7 @@ export class ProfileComponent implements OnInit {
 
     const body = {
       username: this.form.value.username,
-      aboutMe: this.form.value.aboutMe,
-      prevUsername: this.username
+      aboutMe: this.form.value.aboutMe
     };
 
     if (this.username === body.username && this.aboutMe === body.aboutMe) {
@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    this._clientService.updateUserProfile(body).subscribe(
+    this._clientService.updateUserProfile(this.id!, body).subscribe(
       (res) => {
         this.toastr.success(res.message, 'Éxito');
         this.dataSharingService.username.next(body.username);
@@ -108,5 +108,10 @@ export class ProfileComponent implements OnInit {
   isMinLengthInvalid(field: string): boolean {
     const formControl = this.form.get(field);
     return formControl?.errors?.minlength && formControl?.touched;
+  }
+
+  isPatternValid(field: string): boolean{
+    const formControl = this.form.get(field);
+    return formControl?.errors?.pattern && formControl?.touched;
   }
 }

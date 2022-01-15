@@ -47,7 +47,7 @@ export class PasswordRecoveryComponent implements OnInit {
         (res) => {
           if (res.statusCode === 200) {
             this.toastr.success('Por favor revise su bandeja de entrada.', 'Correo enviado', {
-              timeOut: 6000
+              timeOut: 8000
             });
             this.router.navigate(['/login']);
           }

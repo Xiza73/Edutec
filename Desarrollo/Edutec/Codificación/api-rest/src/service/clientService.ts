@@ -15,8 +15,8 @@ export class ClientService {
     return await this.clientDAO.getUserProfileId(id);
   };
 
-  public updateUserProfile = async (body: any) => {
-    return await this.clientDAO.updateUserProfile(body);
+  public updateUserProfile = async (id: string, body: any) => {
+    return await this.clientDAO.updateUserProfile(id, body);
   };
   
   public updateUserProfileId = async (body: any) => {
