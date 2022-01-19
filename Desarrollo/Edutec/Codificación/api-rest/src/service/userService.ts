@@ -7,8 +7,8 @@ export class UserService {
     this.userDAO = new UserDAO();
   }
 
-  public getUsers = async () => {
-    return await this.userDAO.getUsers();
+  public getUsers = async (person: string) => {
+    return await this.userDAO.getUsers(person);
   };
   
   public getUsersByRole = async (body: any) => {
@@ -23,7 +23,12 @@ export class UserService {
     return await this.userDAO.updateUser(body);
   };
   
-  public deleteUser = async (body: any) => {
-    return await this.userDAO.deleteUser(body);
+  public deleteUser = async (id: string) => {
+    return await this.userDAO.deleteUser(id);
   };
+
+  public updatePassword = async (body: any) => {
+    return await this.userDAO.updatePassword(body);
+  };
+  
 }

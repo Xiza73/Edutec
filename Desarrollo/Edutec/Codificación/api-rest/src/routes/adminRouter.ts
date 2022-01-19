@@ -17,5 +17,8 @@ export class AdminRouter {
 
   private _configure(): void {
     this._router.get('/profile/id/', this._controller.getUserProfileId);
+    this._router.post('/', this._controller.createUser);
+    this._router.delete('/:id', this._controller.deleteUser);
+    this._router.put('/', this._controller.updateUser);
   }
 }

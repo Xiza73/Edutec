@@ -11,15 +11,15 @@
              type="text" 
              formControlName="username"
              placeholder="Nombre de usuario" />
-      <div *ngIf="isRequiredField('username')"
+      <div *ngIf="isRequiredField('username', form)"
             class="text-start text-danger fw-bold mt-1 error">
         Nombre de usuario requerido
       </div>
-      <div *ngIf="isPatternValid('username')"
+      <div *ngIf="isPatternValid('username', form)"
            class="text-start text-danger fw-bold mt-1 error">
         Solo letras o números
       </div>
-      <div *ngIf="isMaxLengthExceeded('username')"
+      <div *ngIf="isMaxLengthExceeded('username', form)"
            class="text-start text-danger fw-bold mt-1 error">
         No se debe exceder los 50 caracteres
       </div>
@@ -38,12 +38,45 @@
                 placeholder="Descripción"
       >
       </textarea>
-      <div *ngIf="isMaxLengthExceeded('username')"
+      <div *ngIf="isMaxLengthExceeded('username', form)"
            class="text-start text-danger fw-bold mt-1 error">
         No se debe exceder los 240 caracteres
       </div>
   
-      <button class="btn btn-warning mt-5" type="submit">Actualizar perfil</button>
+      <button class="btn btn-warning mt-4" type="submit">Actualizar perfil</button>
+    </form>
+  </div>
+
+  <div class="col-10 mt-2 mb-5">
+    <form [formGroup]="pwdForm">
+      <p class="bold mt-5"><b>Cambiar contraseña</b></p>
+      
+      <input class="form-control" 
+             type="password" 
+             formControlName="password"
+             placeholder="Contraseña" />
+      <div *ngIf="isRequiredField('password', pwdForm)"
+            class="text-start text-danger fw-bold mt-1 error">
+        Contraseña requerida
+      </div>
+      <div *ngIf="isMinLengthInvalid('password', pwdForm)"
+            class="text-start text-danger fw-bold mt-1 error">
+        La contraseña debe tener mínimo 3 caracteres
+      </div>
+      <input class="form-control mt-3" 
+             type="password" 
+             formControlName="newPassword"
+             placeholder="Nueva contraseña" />
+      <div *ngIf="isRequiredField('newPassword', pwdForm)"
+            class="text-start text-danger fw-bold mt-1 error">
+        Nueva contraseña requerida
+      </div>
+      <div *ngIf="isMinLengthInvalid('newPassword', pwdForm)"
+            class="text-start text-danger fw-bold mt-1 error">
+        La nueva contraseña debe tener mínimo 3 caracteres
+      </div>
+
+      <button class="btn btn-warning mt-4" type="button" (click)="updatePassword()">Actualizar contraseña</button>
     </form>
   </div>
 </div>

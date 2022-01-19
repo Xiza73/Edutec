@@ -11,6 +11,7 @@ export interface IUser extends Document {
     password: string,
     role: IRole,
     person: IClient | IAdmin,
+    status: number,
     comparePassword: (password: string) => Promise<boolean>
 }
 

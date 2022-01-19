@@ -7,7 +7,7 @@ import ResponseBase from "../helpers/ResponseBase";
 import Role from "../models/Role";
 import { IRole } from "../models/Role";
 import ResponseData from "../helpers/ResponseData";
-import Admin, { IAdmin } from "../models/Admin";
+import Admin from "../models/Admin";
 
 export class ResponseLogin {
   constructor(
@@ -25,7 +25,7 @@ export class AuthDAO {
       {
         id: user._id,
         personId: user.person._id,
-        role: user.role,
+        role: user.role.description
       },
       config.jwtSecret,
       {
@@ -61,17 +61,20 @@ export class AuthDAO {
         if (person) {
           user = await User.findOne({
             person: person._id,
-          });
+          }).populate("role");
         } 
    
       } else {
         return new ErrorHandler(400, "Faltan datos");
       }
 
-      if (!person)
-        return new ErrorHandler(422, "El usuario no se encuentra registrado");
-      if (!user)
+      // if (!person)
+      //   return new ErrorHandler(422, "El usuario no se encuentra registrado");
+      if (!person || !user)
         return new ErrorHandler(422, "Correo y/o contraseña incorrectas");
+
+      if (user.status === 0)
+        return new ErrorHandler(422, "Usuario desactivado");
 
       const match = await user.comparePassword(password);
       if (match) {
@@ -85,56 +88,6 @@ export class AuthDAO {
       return new ErrorHandler(422, "Correo y/o contraseña incorrectas");
     } catch (err) {
       return new ErrorHandler(400, "Error al iniciar sesión");
-    }
-  };
-
-  public createUser = async (request: any) => {
-    //register for admins
-    const { username, roleId, password, name, email, description } = request;
-    try {
-      if (!username || !email || !password || !roleId || !name)
-        return new ErrorHandler(400, "Faltan datos");
-
-      const user: (IUser & { _id: any }) | null = await User.findOne({
-        username,
-      });
-      if (user) {
-        return new ErrorHandler(422, "El usuario ya está registrado");
-      }
-
-      const role: (IRole & { _id: any }) | null = await Role.findById(
-        roleId
-      ).exec();
-
-      if (!role) return new ErrorHandler(400, "No se encontró el rol");
-
-      let newAdmin: (IAdmin & { _id: any }) | null = await Admin.findOne(
-        { email },
-        { _id: 1 }
-      ).exec();
-
-      if (newAdmin) {
-        let use: (IUser & { _id: any }) | null = await User.findOne({
-          person: newAdmin._id,
-        });
-        if (use) return new ErrorHandler(422, "El usuario ya está registrado");
-      } else {
-        newAdmin = new Admin({ name, email, description });
-        await newAdmin.save();
-      }
-
-      const newUser = new User({
-        username,
-        password,
-        person: newAdmin._id,
-        role: role._id,
-        onPerson: "Admin",
-      });
-      await newUser.save();
-
-      return new ResponseBase(200, "Usuario registrado correctamente");
-    } catch (err) {
-      return new ErrorHandler(400, "Error al registrar usuario");
     }
   };
 
@@ -180,6 +133,7 @@ export class AuthDAO {
         person: newClient._id,
         role: role._id,
         onPerson: "Client",
+        status: 1
       });
       await newUser.save();
 

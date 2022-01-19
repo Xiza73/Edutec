@@ -17,6 +17,10 @@ export class ClientService {
     return this.httpClient.get(this.apiUrl + `/client/${clientId}`);
   }
 
+  public readClients(): Observable<any> {
+    return this.httpClient.get(this.apiUrl + '/client');
+  }
+
   public addFavorite(clientId: string, courseUrl: string): Observable<any> {
     const payload = { clientId, courseUrl };
     return this.httpClient.post(this.apiUrl + '/client/favorites/add', payload);

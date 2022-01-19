@@ -16,4 +16,8 @@ export class RoleService {
   public readRole(id: string): Observable<any> {
     return this.httpClient.get(this.apiUrl + `/role/${id}`);
   }
+
+  public readRoles(): Observable<any> {
+    return this.httpClient.get(this.apiUrl + '/role');
+  }
 }

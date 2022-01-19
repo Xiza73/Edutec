@@ -26,6 +26,10 @@ export class ClientService {
   public readClient = async (id: string) => {
     return await this.clientDAO.readClient(id);
   };
+  
+  public readClients = async () => {
+    return await this.clientDAO.readClients();
+  };
 
   public addFavorite = async (body: any) => {
     return await this.clientDAO.addFavorite(body);

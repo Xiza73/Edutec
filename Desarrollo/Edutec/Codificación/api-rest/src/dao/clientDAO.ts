@@ -125,6 +125,16 @@ export class ClientDAO {
     }
   }
 
+  public readClients = async () => {
+    try {
+      const data = await Client.find({ status: 1 });
+      return new ResponseData(200, "Cliente obtenido correctamente", data);
+    } catch (error) {
+      return new ErrorHandler(404, "Error al obtener cliente");
+    }
+  }
+
+
   public addFavorite = async (body: any) => {
     const { courseUrl, clientId } = body;
     try {
@@ -175,7 +185,7 @@ export class ClientDAO {
         return new ErrorHandler(422, "El cliente no está registrado");
       }
 
-      const data = await Course.find({'url': {$in: client.favorites}})
+      const data = await Course.find({'url': {$in: client.favorites}, status: 1})
 
       return new ResponseData(200, "Cursos favoritos obtenidos correctamente", data);
     } catch (error) {
