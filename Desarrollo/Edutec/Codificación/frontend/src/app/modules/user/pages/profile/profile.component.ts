@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ClientService } from 'src/app/core/services/client.service';
 import { TokenService } from 'src/app/core/services/token.service';
+import { ClientService } from 'src/app/data/services/client.service';
+import { Router } from '@angular/router';
+import { DataSharingService } from 'src/app/core/services/data-sharing.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,6 +25,7 @@ export class ProfileComponent implements OnInit {
     username: new FormControl('', [
       Validators.required,
       Validators.maxLength(50),
+      Validators.pattern("[A-Za-z0-9]+")
     ]),
     aboutMe: new FormControl('', [
       Validators.maxLength(240)
@@ -32,7 +35,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private tokenService: TokenService,
     private toastr: ToastrService,
-    private _clientService: ClientService
+    private _clientService: ClientService,
+    private dataSharingService: DataSharingService
   ) {}
 
   ngOnInit(): void {
@@ -40,11 +44,6 @@ export class ProfileComponent implements OnInit {
   }
 
   public getData(): void {
-    this.isLogged = this.tokenService.isValidToken();
-    if (!this.isLogged) {
-      this.toastr.error('No se encuentra loggeado', 'Error');
-      return;
-    }
     this.id = this.tokenService.getIdFromToken();
     if (!this.id) {
       this.toastr.error('Error al encontrar usuario', 'Error');
@@ -53,9 +52,9 @@ export class ProfileComponent implements OnInit {
     this._clientService.getUserProfile(this.id).subscribe(
       (res) => {
         const { email, username, aboutMe } = res.body.data;
-        if(aboutMe){
+        if (aboutMe) {
           this.form.setValue({ email, username, aboutMe });
-        }else{
+        } else {
           this.form.setValue({ email, username, aboutMe: ""});
         }
         
@@ -76,8 +75,7 @@ export class ProfileComponent implements OnInit {
 
     const body = {
       username: this.form.value.username,
-      aboutMe: this.form.value.aboutMe,
-      prevUsername: this.username
+      aboutMe: this.form.value.aboutMe
     };
 
     if (this.username === body.username && this.aboutMe === body.aboutMe) {
@@ -85,9 +83,10 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    this._clientService.updateUserProfile(body).subscribe(
+    this._clientService.updateUserProfile(this.id!, body).subscribe(
       (res) => {
         this.toastr.success(res.message, 'Éxito');
+        this.dataSharingService.username.next(body.username);
         this.getData();
       },
       (err) => {
@@ -109,5 +108,10 @@ export class ProfileComponent implements OnInit {
   isMinLengthInvalid(field: string): boolean {
     const formControl = this.form.get(field);
     return formControl?.errors?.minlength && formControl?.touched;
+  }
+
+  isPatternValid(field: string): boolean{
+    const formControl = this.form.get(field);
+    return formControl?.errors?.pattern && formControl?.touched;
   }
 }

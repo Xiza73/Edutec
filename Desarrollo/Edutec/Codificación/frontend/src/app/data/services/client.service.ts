@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -29,5 +29,18 @@ export class ClientService {
 
   public readFavorites(clientId: string): Observable<any> {
     return this.httpClient.get(this.apiUrl + `/client/favorites/${clientId}`);
+  }
+
+  public getUserProfile(id: string): Observable<any> {
+    let params: HttpParams = new HttpParams();
+    if (id) {
+      params = params.append('id', id);
+    }
+    return this.httpClient.get<any>(this.apiUrl + '/client/profile/id', { observe: "response", params });
+  }
+
+  public updateUserProfile(id: string, body: any): Observable<any> {
+    console.log(body);
+    return this.httpClient.put<any>(this.apiUrl + `/client/profile/${id}`, body, { observe: "body" });
   }
 }

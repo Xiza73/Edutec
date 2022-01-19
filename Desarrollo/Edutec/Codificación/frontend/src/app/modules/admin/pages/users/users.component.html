@@ -1,0 +1,78 @@
+<h4>Administrar usuarios</h4>
+<mat-divider></mat-divider>
+<div class="row">
+  <div class="col-12 mt-4">
+    <button mat-raised-button class="bg-info text-white" (click)="newUser()">
+      <mat-icon class="me-1">add</mat-icon>
+      <span>Nuevo usuario</span>
+    </button>
+  </div>
+  <div class="col-12 mt-4">
+    <mat-form-field>
+      <mat-label>Buscar</mat-label>
+      <input matInput (keyup)="filtrar($event)" placeholder="Escriba una palabra clave" #input>
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource"  class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+      </ng-container>
+
+      <!-- Columna Nombre -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Columna Email -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef > Correo </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+      <!--Columna Rol  -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef> Rol </th>
+        <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+      </ng-container>
+
+      <!-- Columna Status -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      </ng-container>
+
+      <!-- columna  editar-eliminar  -->
+      <ng-container matColumnDef="menu">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>create</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>delete</mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row class="bg-primary" *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No se encontró ningun dato que coincida con "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
+
+  </div>
+</div>

@@ -15,9 +15,9 @@
             class="text-start text-danger fw-bold mt-1 error">
         Nombre de usuario requerido
       </div>
-      <div *ngIf="isMinLengthInvalid('username')"
+      <div *ngIf="isPatternValid('username')"
            class="text-start text-danger fw-bold mt-1 error">
-        El nombre de usuario debe tener al menos 3 caracteres
+        Solo letras o números
       </div>
       <div *ngIf="isMaxLengthExceeded('username')"
            class="text-start text-danger fw-bold mt-1 error">

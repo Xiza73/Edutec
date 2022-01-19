@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { InstitutionRoutingModule } from './institution-routing.module';
-import { InstitutionDetailComponent } from './page/institution-detail/institution-detail.component';
-import { InstitutionSearchComponent } from './page/institution-search/institution-search.component';
+import { InstitutionDetailComponent } from './pages/institution-detail/institution-detail.component';
+import { InstitutionSearchComponent } from './pages/institution-search/institution-search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
