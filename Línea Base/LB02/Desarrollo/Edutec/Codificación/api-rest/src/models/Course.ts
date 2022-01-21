@@ -16,7 +16,8 @@ export interface ICourse extends Document {
     schedule: string,
     url: string,
     score: number,
-    votes: number
+    votes: number,
+    status: number
 }
 
 const Course = new Schema({
@@ -70,6 +71,11 @@ const Course = new Schema({
     votes: {
         type: Number,
         required: false //init 0
+    },
+    status: {
+        type: Number,
+        required: false,
+        default: 1,
     }
 }, { timestamps: true });
 

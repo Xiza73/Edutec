@@ -66,9 +66,9 @@ export class CourseDAO {
     try {
       let data;
       if (name) {
-        data = await Course.find({ name: {$regex: new RegExp(name, 'i')} }).sort([[field, sort]]).exec();
+        data = await Course.find({ name: {$regex: new RegExp(name, 'i')}, status: 1 }).sort([[field, sort]]).exec();
       } else {
-        data = await Course.find().sort([[field, sort]]).exec();
+        data = await Course.find({ status: 1 }).sort([[field, sort]]).exec();
       }
       return new ResponseData(200, "Cursos obtenidos correctamente", data);
     } catch (error) {
@@ -78,7 +78,11 @@ export class CourseDAO {
 
   public readCourse = async (id: string) => {
     try {
-      const data = await Course.findById(id);
+      const data = await Course.findOne({ _id: id, status: 1 });
+
+      if (!data)
+        return new ErrorHandler(404, "No existe el curso");
+
       return new ResponseData(200, "Curso obtenido correctamente", data);
     } catch (error) {
       return new ErrorHandler(404, "Error al obtener curso");
@@ -162,6 +166,22 @@ export class CourseDAO {
     } catch (error) {
       return new ErrorHandler(404, "Error al eliminar cursos");
     }
-  }
+  };
+
+  public readCoursesByInstitutionId = async (institutionId: string) => {
+    try {
+      const institution = await Institution.findById(institutionId);
+
+      if (!institution) {
+        return new ErrorHandler(400, "No se encontró la institución");
+      }
+
+      const data = await Course.find({institution});
+
+      return new ResponseData(200, "Cursos obtenidos correctamente", data);
+    } catch (error) {
+      return new ErrorHandler(404, "Error al obtener cursos");
+    }
+  };
 
 }

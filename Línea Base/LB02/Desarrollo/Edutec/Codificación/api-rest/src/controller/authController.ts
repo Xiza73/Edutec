@@ -24,6 +24,7 @@ export class AuthController {
     next(response);
     return;
   };
+
   public async logout(req: Request, res: Response, next: NextFunction) {
     try {
       res.clearCookie("jwt");

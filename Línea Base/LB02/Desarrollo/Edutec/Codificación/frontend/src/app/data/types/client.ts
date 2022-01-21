@@ -1,7 +1,6 @@
-import { Course } from "./course";
-
 export interface Client {
   _id      ?: string;
+  aboutMe  ?: string;
   email    ?: string;
-  favorites?: string[]
+  favorites?: string[];
 }

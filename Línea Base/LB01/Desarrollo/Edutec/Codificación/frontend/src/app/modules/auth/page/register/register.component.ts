@@ -18,9 +18,9 @@ export class RegisterComponent implements OnInit {
   
   // Form
   form: FormGroup = this.fb.group({
-    username: ['', [ Validators.required ]],
-    email   : ['', [ Validators.required ]],
-    password: ['', [ Validators.required ]]
+    username: ['', [ Validators.required, Validators.maxLength(50) ]],
+    email   : ['', [ Validators.required, Validators.email, Validators.maxLength(50) ]],
+    password: ['', [ Validators.required, Validators.minLength(8), Validators.maxLength(20) ]]
   });
 
   constructor(
@@ -34,6 +34,11 @@ export class RegisterComponent implements OnInit {
   }
 
   signup(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     const user: User = this.form.value;
 
     this.authService.singup(user).subscribe(
@@ -47,6 +52,26 @@ export class RegisterComponent implements OnInit {
         this.toastr.error(err.error.message, 'Error');
       }
     );
+  }
+
+  isRequiredField(field: string): boolean {
+    const formControl = this.form.get(field);
+    return formControl?.errors?.required && formControl?.touched;
+  }
+
+  isValidEmail(): boolean {
+    const formControl = this.form.get('email');
+    return formControl?.errors?.email && formControl?.touched; 
+  }
+
+  isMaxLengthExceeded(field: string): boolean {
+    const formControl = this.form.get(field);
+    return formControl?.errors?.maxlength && formControl?.touched; 
+  }
+
+  isMinLengthInvalid(field: string): boolean {
+    const formControl = this.form.get(field);
+    return formControl?.errors?.minlength && formControl?.touched;
   }
 
 }

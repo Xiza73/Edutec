@@ -1,42 +1,75 @@
-<form class="formulario" [formGroup]="form"> 
-    <h1 class="h3">Regístrate y comienza a aprender</h1>
-    <hr/>
-        <div class="contenedor">
-            <div class="input-contenedor rounded">
-                <fa-icon [icon]="faUser" class="icon" ></fa-icon>
-                <input type="text" 
-                       placeholder="Nombre de usuario"
-                       formControlName="username">
-                <br>
-            </div>
-            <div class="input-contenedor rounded">
-                <fa-icon [icon]="faEnvelope" class="icon"></fa-icon>
-                <input type="text" 
-                       placeholder="Correo"
-                       formControlName="email">
-                <br>
-            </div>
-            <div class="input-contenedor rounded">
-                <fa-icon [icon]="faLock" class="icon"></fa-icon>
-                <input type="password" 
-                       placeholder="Contraseña"
-                       formControlName="password">
-            </div>
+<form class="formulario" [formGroup]="form">
+  <h1 class="h3">Regístrate y comienza a aprender</h1>
+  <hr />
 
-            <input type="submit" 
-                   value="Registrarse" 
-                   class="button rounded"
-                   (click)="signup()"
-                   [disabled]="form.pending || form.invalid">
+  <div class="contenedor">
 
-            <p>¿Ya tienes cuenta?<a class="link" routerLink="/login"> Inicia sesión</a></p>
-        </div>     
+    <div class="input-contenedor rounded">
+      <fa-icon [icon]="faUser" class="icon"></fa-icon>
+      <input type="text"
+             placeholder="Nombre de usuario"
+             formControlName="username"
+             [maxlength]="50"/>
+    </div>
+    <div *ngIf="isRequiredField('username')"
+          class="text-start text-danger fw-bold mt-1 error">
+      Nombre de usuario requerido
+    </div>
+    <div *ngIf="isMaxLengthExceeded('username')"
+          class="text-start text-danger fw-bold mt-1 error">
+      No se debe exceder los 50 caracteres
+    </div>
+
+    <div class="input-contenedor rounded">
+      <fa-icon [icon]="faEnvelope" class="icon"></fa-icon>
+      <input type="email" 
+             placeholder="Correo electrónico" 
+             formControlName="email"
+             [maxlength]="50"/>
+    </div>
+    <div *ngIf="isRequiredField('email')"
+          class="text-start text-danger fw-bold mt-1 error">
+      Correo electrónico requerido
+    </div>
+    <div *ngIf="isValidEmail()"
+         class="text-start text-danger fw-bold mt-1 error">
+      Ingrese un correo válido
+    </div>
+    <div *ngIf="isMaxLengthExceeded('email')"
+         class="text-start text-danger fw-bold mt-1 error">
+      No se debe exceder los 50 caracteres
+    </div>
+
+    <div class="input-contenedor rounded">
+      <fa-icon [icon]="faLock" class="icon"></fa-icon>
+      <input type="password"
+             placeholder="Contraseña"
+             formControlName="password"
+             [maxlength]="20"/>
+    </div>
+    <div *ngIf="isRequiredField('password')"
+          class="text-start text-danger fw-bold mt-1 error">
+      Contraseña requerida
+    </div>
+
+    <div *ngIf="isMinLengthInvalid('password')"
+          class="text-start text-danger fw-bold mt-1 error">
+      La contraseña debe tener como mínimo 8 caracteres
+    </div>
+
+
+    <div *ngIf="isMaxLengthExceeded('password')"
+         class="text-start text-danger fw-bold mt-1 error">
+      No se debe exceder los 20 caracteres
+    </div>
+
+    <input type="submit"
+           value="Registrarse"
+           class="button rounded btn btn-primary"
+           (click)="signup()"/>
+
+    <p>
+      ¿Ya tienes cuenta? <a class="breadcrumb-item" routerLink="/login"> Inicia sesión</a>
+    </p>
+  </div>
 </form>
-
-
-
-
-
-
-
-

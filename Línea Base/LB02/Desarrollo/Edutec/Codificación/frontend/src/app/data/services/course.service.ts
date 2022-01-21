@@ -27,6 +27,10 @@ export class CourseService {
     return this.httpClient.get(this.apiUrl + `/course/${id}`);
   }
 
+  public readCoursesByInstitutionId(institutionId: string): Observable<any> {
+    return this.httpClient.get(this.apiUrl + `/course/institution/${institutionId}`);
+  }
+
   public setCourses(courses: any[]) {
     this.courses = courses;
   }

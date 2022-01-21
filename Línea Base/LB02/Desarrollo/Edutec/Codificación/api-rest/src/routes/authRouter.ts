@@ -20,6 +20,6 @@ export class AuthRouter {
     this._router.post('/recover', this._controller.sendRecoverEmail);
     this._router.post('/reset', this._controller.changePassword);
     this._router.post('/isuser', this._controller.isUser);
-    this._router.post('/logout', passport.authenticate('jwt'),this._controller.logout);
+    this._router.post('/logout', passport.authenticate('jwt'), this._controller.logout);
   }
 }

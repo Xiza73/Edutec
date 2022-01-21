@@ -28,17 +28,7 @@ export class TokenService {
     }
 
     const values = this._getTokenPayloadDecoded(token);
-
     return !this._tokenExpired(values.exp);
-  }
-
-  public getUsernameFromToken(): string | null {
-    const token = this.getToken();
-    if (!token) {
-      return null;
-    }
-    const values = this._getTokenPayloadDecoded(token);
-    return values.username;
   }
 
   public getIdFromToken(): string | null {
@@ -48,7 +38,6 @@ export class TokenService {
     }
 
     const values = this._getTokenPayloadDecoded(token);
-    console.log(values)
     return values.id;
   }
 
@@ -59,8 +48,17 @@ export class TokenService {
     }
 
     const values = this._getTokenPayloadDecoded(token);
-    console.log(values)
     return values.personId;
+  }
+
+  public getRoleFromToken(): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+    
+    const values = this._getTokenPayloadDecoded(token);
+    return values.role;
   }
 
   public isLogged(): boolean {

@@ -64,4 +64,13 @@ export class CourseController {
     next(response);
     return;
   };
+
+  public readCoursesByInstitutionId = async (req: Request, res: Response, next: NextFunction) => {
+    const { institutionId } = req.params;
+    const response = await this.courseService.readCoursesByInstitutionId(institutionId);
+
+    if (response.statusCode === 200) return res.status(200).json(response);
+    next(response);
+    return;
+  };
 }

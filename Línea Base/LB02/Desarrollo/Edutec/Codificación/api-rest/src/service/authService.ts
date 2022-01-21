@@ -38,7 +38,9 @@ export class AuthService {
         subject: "Reestablecimiento de contraseña ✔",
         html: `
         <b>Por favor ingresa al siguiente enlace para continuar con la recuperación de contraseña: </b>
-        <p>${_config.clientUrl}/new-password?id=${response.data.id}</p>
+        <p><a href="${_config.clientUrl}/new-password?id=${response.data.id}">Cambiar contraseña</a></p>
+        <hr>
+        <p>Edutec.com</p>
         `,
       });
       if(!info.accepted){

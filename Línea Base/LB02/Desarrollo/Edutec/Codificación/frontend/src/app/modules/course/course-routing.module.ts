@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CourseDetailComponent } from './page/course-detail/course-detail.component';
-import { CourseSearchComponent } from './page/course-search/course-search.component';
+import { CourseDetailComponent } from './pages/course-detail/course-detail.component';
+import { CourseSearchComponent } from './pages/course-search/course-search.component';
 
 const routes: Routes = [
   {
@@ -14,6 +14,10 @@ const routes: Routes = [
       {
         path: 'detalle/:id',
         component: CourseDetailComponent
+      },
+      {
+        path: '**',
+        redirectTo: 'busqueda'
       }
     ]
   }

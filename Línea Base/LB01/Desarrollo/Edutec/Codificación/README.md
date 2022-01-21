@@ -1,1 +1,0 @@
-Omitir archivos y carpetas del .gitignore de cada proyecto
