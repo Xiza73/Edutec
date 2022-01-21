@@ -18,3 +18,4 @@ class CourseItem(Item):
     duration = Field()
     schedule = Field()
     url = Field()
+    status = Field()

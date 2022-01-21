@@ -11,6 +11,7 @@ export interface IUser extends Document {
     password: string,
     role: IRole,
     person: IClient | IAdmin,
+    status: number,
     comparePassword: (password: string) => Promise<boolean>
 }
 
@@ -39,6 +40,11 @@ const User = new Schema({
         type: String,
         required: true,
         enum: ['Client', 'Admin']
+    },
+    status: {
+        type: Number,
+        required: false,
+        default: 1,
     }
 }, { timestamps: true });
 

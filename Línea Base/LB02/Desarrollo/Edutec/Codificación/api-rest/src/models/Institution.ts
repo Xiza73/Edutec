@@ -6,7 +6,15 @@ export interface IInstitution extends Document {
     description: string,
     url: string,
     score: number,
-    votes: number
+    votes: number,
+    social: {
+        facebook: string,
+        twitter: string,
+        instagram: string
+    },
+    email: string,
+    logo: string,
+    status: number
 }
 
 const Institution = new Schema({
@@ -31,6 +39,34 @@ const Institution = new Schema({
     votes: {
         type: Number,
         required: false //init 0
+    },
+    social: {
+        facebook: {
+            type: String,
+            required: false
+        },
+        twitter: {
+            type: String,
+            required: false
+        },
+        instagram: {
+            type: String,
+            required: false
+        },
+        required: false
+    },
+    email: {
+        type: String,
+        required: false
+    },
+    logo: {
+        type: String,
+        required: false
+    },
+    status: {
+        type: Number,
+        required: false,
+        default: 1,
     }
 }, { timestamps: true });
 

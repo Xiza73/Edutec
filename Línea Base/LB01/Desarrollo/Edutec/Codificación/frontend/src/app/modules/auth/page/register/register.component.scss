@@ -1,6 +1,6 @@
 .contenedor {
     width: 100%;
-    padding: 15px;
+    padding: 1px 15px;
 }
 .formulario {
     background: #fff;
@@ -14,15 +14,18 @@ h1 {
     padding-bottom: 5px;
 }
 input[type="text"], input[type="email"], input[type="password"] {
-    font-size: 12pt;
     width: 85%;
     padding: 10px;
     border: none;
     margin-left: 10px;
     outline: none;
 }
+.error {
+    font-size: small;
+    text-align: left;
+}
 .input-contenedor {
-    margin-bottom: 15px;
+    margin-top: 15px;
     border: 1px solid #aaa;
     padding: 6px 1px;
 }
@@ -35,17 +38,16 @@ input[type="text"], input[type="email"], input[type="password"] {
 .button {
     border: none;
     width: 100%;
-    font-size: 12pt;
-    color: white;
-    background: #1a2537;
+    // color: white;
+    // background: #1a2537;
     padding: 18px;
-    margin-top: 5px;
+    margin-top: 15px;
     // border-radius: 5px;
     cursor: pointer;
 }
-.button:hover {
-    background: cadetblue;
-}
+// .button:hover {
+//     background: cadetblue;
+// }
 .button:disabled {
     background: grey;
 }

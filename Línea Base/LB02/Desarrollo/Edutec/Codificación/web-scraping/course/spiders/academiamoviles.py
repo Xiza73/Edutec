@@ -46,6 +46,7 @@ class AcademiamovilesSpider(scrapy.Spider):
         item['start'] = self.__format_date(start[18:].strip())
         item['schedule'] = response.xpath("//span[contains(text(), 'Fecha de inicio')]/../span[2]/text()").get(default='').strip()
         item['url'] = response.request.meta['url'].strip()
+        item['status'] = 1
 
         yield item
 

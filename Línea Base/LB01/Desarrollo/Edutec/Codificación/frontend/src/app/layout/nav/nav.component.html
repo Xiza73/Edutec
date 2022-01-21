@@ -1,47 +1,71 @@
-<header class="p-3 mb-3 border-bottom">
-  <div class="container">
-    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-        <span class="navbar-brand mb-0 h1"><h1 class="fw-bold">Edutec</h1></span>
-      </a>
+<div class="container mb-5 px-0">
+  <nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container-fluid px-2">
 
-      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 link-dark">Categorías</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">Instituciones</a></li>
-      </ul>
+      <a class="navbar-brand text-dark" routerLink="/"><h1 class="fw-bold">Edutec</h1></a>
 
       <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-        <button class="btn btn-primary" 
+        <!-- <button class="btn btn-secondary"
                 routerLink="/login"
                 *ngIf="!isLogged">
           Iniciar sesión
-        </button>
+        </button> -->
       </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon text-dark"></span>
+      </button>
 
-      <div class="d-flex align-items-center mx-3"
-           *ngIf="isLogged">
-        <span class="fw-bold">
-          {{ username }}
-        </span>
-      </div>
-
-      <div class="dropdown text-end"
-           *ngIf="isLogged">
-        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="../../../assets/images/user.png" alt="mdo" width="32" height="32" class="rounded-circle">
-        </a>
-        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-          <li><a class="dropdown-item" href="#">Mi perfil</a></li>
-          <li><a class="dropdown-item" href="#">Favoritos</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li>
-            <a class="dropdown-item" 
-               (click)="logout()">
-               Cerrar sesión
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown d-none">
+            <a class="nav-link link-dark dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Categorías
             </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Categoría 1</a></li>
+              <li><a class="dropdown-item" href="#">Categoría 2</a></li>
+              <li><a class="dropdown-item" href="#">Categoría 3</a></li>
+              <li><a class="dropdown-item" href="#">Categoría 4</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link link-dark" href="#" tabindex="-1" aria-disabled="true">Instituciones</a>
           </li>
         </ul>
+
+        <ul class="navbar-nav">
+          <li>
+            <button class="btn btn-primary"
+                    routerLink="/login"
+                    *ngIf="!isLogged">
+              Iniciar sesión
+            </button>
+          </li>
+          <li *ngIf="isLogged"
+              class="nav-item dropdown">
+              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="navbarDropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="../../../assets/images/user.png" alt="mdo" width="32" height="32" class="rounded-circle">
+              </a>
+            <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="navbarDropdownUser">
+              <li><span class="dropdown-item-text">{{ username }}</span></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" (click)="goToProfile()">Mi perfil</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/usuario/favoritos']">Favoritos</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item"
+                   (click)="logout()">
+                   Cerrar sesión
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
       </div>
     </div>
-  </div>
-</header>
+  </nav>
+</div>

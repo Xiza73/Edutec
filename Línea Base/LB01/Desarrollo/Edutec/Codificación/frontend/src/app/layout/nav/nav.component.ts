@@ -22,10 +22,14 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLogged = this.tokenService.isValidToken();
-    
+
     if (this.isLogged) {
       this.username = this.tokenService.getUsernameFromToken()!;
     }
+  }
+
+  goToProfile(){
+    this.router.navigate(['/usuario/perfil']);
   }
 
   logout(): void {

@@ -1,0 +1,36 @@
+<div class="profile-container">
+  <div class="photo-container">
+    <div class="img"></div>
+    <p>{{form.value.username}}</p>
+  </div>
+  <div class="profile-details" [formGroup]="form">
+    <h1>Perfil P&uacute;blico</h1>
+    <p>Añade infomaci&oacute;n sobre ti</p>
+    <br />
+    <p class="bold"><b>Informaci&oacute;n b&aacute;sica</b></p>
+    <input class="form-control" type="text" formControlName="username" />
+    <input
+      class="form-control email"
+      type="text"
+      formControlName="email"
+      [attr.disabled]="true"
+    />
+    <textarea
+      class="form-control"
+      name="description"
+      id="description"
+      cols="10"
+      formControlName="aboutMe"
+    >
+    </textarea>
+    <p class="bold"><b>Añadir o cambiar imagen:</b></p>
+    <input
+      type="file"
+      class="form-control"
+      id="upload"
+      aria-describedby="inputGroupFileAddon04"
+      aria-label="Upload"
+    />
+    <button class="btn btn-warning" (click)="saveData()">Guardar</button>
+  </div>
+</div>

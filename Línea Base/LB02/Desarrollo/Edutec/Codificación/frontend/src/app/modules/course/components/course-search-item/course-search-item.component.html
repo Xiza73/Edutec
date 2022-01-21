@@ -1,6 +1,6 @@
 <div class="card mb-4">
   <div class="card-body">
-    <h6 class="card-title"><a href="#" class="text-decoration-none fw-bold">{{ course.name }}</a></h6>
+    <h6 class="card-title"><a [routerLink]="['/cursos/detalle', course._id]" class="text-decoration-none fw-bold">{{ course.name }}</a></h6>
     <p class="card-text">{{ course.description | summarize }}</p>
 
     <div class="d-flex mt-3">

@@ -20,9 +20,11 @@ export class LoginComponent implements OnInit {
   
   // Form
   form: FormGroup = this.fb.group({
-    email   : ['', [ Validators.required ]],
+    email   : ['', [ Validators.required, Validators.email, Validators.maxLength(50) ]],
     password: ['', [ Validators.required ]]
   });
+
+  errors: any;
 
   constructor(
     private authService: AuthService,
@@ -33,9 +35,15 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
   }
 
   login(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     const user: User = this.form.value;
 
     this.authService.login(user).subscribe(
@@ -49,5 +57,21 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+  isRequiredField(field: string): boolean {
+    const formControl = this.form.get(field);
+    return formControl?.errors?.required && formControl?.touched;
+  }
+
+  isValidEmail(): boolean {
+    const formControl = this.form.get('email');
+    return formControl?.errors?.email && formControl?.touched; 
+  }
+
+  isMaxLengthExceeded(field: string): boolean {
+    const formControl = this.form.get(field);
+    return formControl?.errors?.maxlength && formControl?.touched; 
+  }
+
 
 }
