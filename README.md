@@ -1,2 +1,26 @@
-# Edutec
-Desarrollo e implementación de un sistema web de búsqueda de cursos utilizando la técnica de web scraping.
+# 📖 Edutec 💻
+
+Búsqueda de Cursos con Web Scraping
+
+## 👥 Integrantes
+---
+- Fajardo Astete, Manuel Alexandro 17200107
+- Gonzales Orosco, Jhon Anderson 17200276
+- Romaní Días, René Angel 15200224
+- Campos Apaza, Leyla Gabriela 17200261
+
+## 🚧 Usuarios de prueba
+---
+**🧍 Cliente prueba**
+```
+correo: angel@demo.com
+contraseña: 123
+```
+**🕴 Admin prueba**
+```
+correo: admin@demo.com
+contraseña: 123
+```
+
+
+### 🚀 Despliegue del proyecto: [Edutec](https://edutec.xiza73.repl.co/)
