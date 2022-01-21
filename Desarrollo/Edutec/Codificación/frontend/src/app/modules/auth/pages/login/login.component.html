@@ -25,8 +25,7 @@
       <input type="password"
              placeholder="Contraseña"
              formControlName="password"
-             [minlength]="3"
-             [maxlength]="20"/>
+             [minlength]="3"/>
     </div>
     <div *ngIf="isRequiredField('password')"
          class="text-start text-danger fw-bold mt-1 error">

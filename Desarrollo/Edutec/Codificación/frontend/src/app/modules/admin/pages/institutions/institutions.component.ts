@@ -67,6 +67,10 @@ export class InstitutionsComponent implements OnInit, AfterViewInit {
       width: '700px'
     }).afterClosed().subscribe((institution: any) => {
       if (!institution) return;
+      if (institution === 'no changes') {
+        this.toastr.info('No hay datos que actualizar', 'Institución');
+        return;
+      }
       this.institutionService.updateInstitution(institution).subscribe(
         response => {
           this.loadInstitutions();

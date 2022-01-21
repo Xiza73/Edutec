@@ -9,6 +9,7 @@ import { User } from 'src/app/data/types/user';
 import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
 import { AdminService } from 'src/app/data/services/admin.service';
 import { ToastrService } from 'ngx-toastr';
+import { DataSharingService } from 'src/app/core/services/data-sharing.service';
 
 @Component({
   selector: 'app-users',
@@ -27,7 +28,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private userService: UserService,
     private adminService: AdminService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dataSharingService: DataSharingService
   ) { }
 
   ngOnInit() {
@@ -60,6 +62,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   editUser(user: User): void {
+    const isLoggedInUser = this.isLoggedInUser(user);
+
     this.dialog.open(CreateEditUserComponent, {
       data: {
         mode: 'edit',
@@ -68,8 +72,15 @@ export class UsersComponent implements OnInit, AfterViewInit {
       width: '650px'
     }).afterClosed().subscribe((user: any) => {
       if (!user) return;
+      if (user === 'no changes') {
+        this.toastr.info('No hay datos que actualizar', 'Usuario');
+        return;
+      }
       this.adminService.updateUser(user).subscribe(
         response => {
+          if (isLoggedInUser) {
+            this.dataSharingService.username.next(user.username);
+          }
           this.loadUsers();
           this.toastr.success(response.message, 'Éxito');
         },
@@ -114,5 +125,10 @@ export class UsersComponent implements OnInit, AfterViewInit {
         this.dataSource.data = response.data;
       }
     )
+  }
+
+  private isLoggedInUser(user: User): boolean {
+    const currentUsername = this.dataSharingService.username.value;
+    return currentUsername === user.username;
   }
 }

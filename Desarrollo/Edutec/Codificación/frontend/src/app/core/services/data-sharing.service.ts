@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { AdminService } from 'src/app/data/services/admin.service';
 import { ClientService } from 'src/app/data/services/client.service';
-import { RoleService } from 'src/app/data/services/role.service';
 import { TokenService } from './token.service';
 
 @Injectable({

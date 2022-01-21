@@ -29,6 +29,7 @@ export class CreateEditUserComponent implements OnInit {
   mode: 'create' | 'edit' = 'create';
   user: User = {};
   roles: Role[] = [];
+  initialFormValue: any = {};
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: any,
@@ -50,6 +51,7 @@ export class CreateEditUserComponent implements OnInit {
         roleId: (this.user.role as Role)._id,
         status: this.user.status
       });
+      this.initialFormValue = this.form.value;
     }
 
     this.loadRoles();
@@ -58,6 +60,10 @@ export class CreateEditUserComponent implements OnInit {
   save(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
+    }
+    if (JSON.stringify(this.initialFormValue) === JSON.stringify(this.form.value)) {
+      this.dialogRef.close('no changes');
       return;
     }
     const user = this.form.value;

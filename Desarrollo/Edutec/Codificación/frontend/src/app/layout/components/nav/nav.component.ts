@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { DataSharingService } from 'src/app/core/services/data-sharing.service';
 import { TokenService } from 'src/app/core/services/token.service';
-import { ClientService } from 'src/app/data/services/client.service';
 
 @Component({
   selector: 'app-nav',

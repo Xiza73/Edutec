@@ -21,6 +21,7 @@ export class CreateEditInstitutionComponent implements OnInit {
 
   mode: 'create' | 'edit' = 'create';
   institution: Institution = {};
+  initialFormValue: any = {};
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: any,
@@ -39,12 +40,17 @@ export class CreateEditInstitutionComponent implements OnInit {
         email: this.institution.email,
         status: this.institution.status
       });
+      this.initialFormValue = this.form.value;
     }
   }
 
   save(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
+    }
+    if (JSON.stringify(this.initialFormValue) === JSON.stringify(this.form.value)) {
+      this.dialogRef.close('no changes');
       return;
     }
     const institution = this.form.value;
