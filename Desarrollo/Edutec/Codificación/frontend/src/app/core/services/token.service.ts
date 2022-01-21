@@ -51,12 +51,12 @@ export class TokenService {
     return values.personId;
   }
 
-  public getRoleIdFromToken(): string | null {
+  public getRoleFromToken(): string | null {
     const token = this.getToken();
     if (!token) {
       return null;
     }
-
+    
     const values = this._getTokenPayloadDecoded(token);
     return values.role;
   }

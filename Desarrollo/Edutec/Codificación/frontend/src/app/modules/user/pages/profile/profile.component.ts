@@ -5,6 +5,7 @@ import { TokenService } from 'src/app/core/services/token.service';
 import { ClientService } from 'src/app/data/services/client.service';
 import { Router } from '@angular/router';
 import { DataSharingService } from 'src/app/core/services/data-sharing.service';
+import { UserService } from 'src/app/data/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,11 +13,12 @@ import { DataSharingService } from 'src/app/core/services/data-sharing.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  public isLogged: boolean = false;
-  public username: string = '';
-  public aboutMe: string = '';
-  public id: string | null = '';
-  public form = new FormGroup({
+  isLogged: boolean = false;
+  username: string = '';
+  aboutMe: string = '';
+  id: string | null = '';
+
+  form = new FormGroup({
     email: new FormControl({ disabled: true }, [
       Validators.required,
       Validators.email,
@@ -32,10 +34,22 @@ export class ProfileComponent implements OnInit {
     ]),
   });
 
+  pwdForm = new FormGroup({
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3)
+    ]),
+    newPassword: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3)
+    ])
+  });
+
   constructor(
     private tokenService: TokenService,
     private toastr: ToastrService,
-    private _clientService: ClientService,
+    private clientService: ClientService,
+    private userService: UserService,
     private dataSharingService: DataSharingService
   ) {}
 
@@ -43,13 +57,13 @@ export class ProfileComponent implements OnInit {
     this.getData();
   }
 
-  public getData(): void {
+  getData(): void {
     this.id = this.tokenService.getIdFromToken();
     if (!this.id) {
       this.toastr.error('Error al encontrar usuario', 'Error');
       return;
     }
-    this._clientService.getUserProfile(this.id).subscribe(
+    this.clientService.getUserProfile(this.id).subscribe(
       (res) => {
         const { email, username, aboutMe } = res.body.data;
         if (aboutMe) {
@@ -83,7 +97,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    this._clientService.updateUserProfile(this.id!, body).subscribe(
+    this.clientService.updateUserProfile(this.id!, body).subscribe(
       (res) => {
         this.toastr.success(res.message, 'Éxito');
         this.dataSharingService.username.next(body.username);
@@ -95,23 +109,47 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  isRequiredField(field: string): boolean {
-    const formControl = this.form.get(field);
+  public updatePassword() {
+    if (this.pwdForm.invalid) {
+      this.pwdForm.markAllAsTouched();
+      return;
+    }
+
+    const body = {
+      id: this.id,
+      password: this.pwdForm.value.password,
+      newPassword: this.pwdForm.value.newPassword
+    };
+
+    this.userService.updatePassword(body).subscribe(
+      (res) => {
+        this.toastr.success(res.message, 'Éxito');
+      },
+      (err) => {
+        this.toastr.error(err.error.message, 'Error');
+      }
+    ).add(() => {
+      this.pwdForm.reset();
+    });
+  }
+
+  isRequiredField(field: string, form: FormGroup): boolean {
+    const formControl = form.get(field);
     return formControl?.errors?.required && formControl?.touched;
   }
 
-  isMaxLengthExceeded(field: string): boolean {
-    const formControl = this.form.get(field);
+  isMaxLengthExceeded(field: string, form: FormGroup): boolean {
+    const formControl = form.get(field);
     return formControl?.errors?.maxlength && formControl?.touched; 
   }
 
-  isMinLengthInvalid(field: string): boolean {
-    const formControl = this.form.get(field);
+  isMinLengthInvalid(field: string, form: FormGroup): boolean {
+    const formControl = form.get(field);
     return formControl?.errors?.minlength && formControl?.touched;
   }
 
-  isPatternValid(field: string): boolean{
-    const formControl = this.form.get(field);
+  isPatternValid(field: string, form: FormGroup): boolean{
+    const formControl = form.get(field);
     return formControl?.errors?.pattern && formControl?.touched;
   }
 }

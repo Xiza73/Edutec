@@ -20,6 +20,7 @@ export class UserRouter {
     this._router.get('/role', this._controller.getUsersByRole);
     this._router.get('/id', this._controller.getUser);
     this._router.put('/', this._controller.updateUser);
-    this._router.delete('/', this._controller.deleteUser);
+    this._router.delete('/:id', this._controller.deleteUser);
+    this._router.put('/password', this._controller.updatePassword);
   }
 }

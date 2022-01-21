@@ -17,14 +17,6 @@ export class AuthController {
     return;
   };
 
-  public createUser = async (req: Request, res: Response, next: NextFunction) => {
-    const response = await this.authService.createUser(req.body);
-
-    if (response.statusCode === 200) return res.status(200).json(response);
-    next(response);
-    return;
-  };
-
   public signUp = async (req: Request, res: Response, next: NextFunction) => {
     const response = await this.authService.signUp(req.body);
 

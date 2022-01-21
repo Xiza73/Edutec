@@ -16,10 +16,6 @@ export class AuthService {
     return await this.authDAO.signIn(request);
   };
 
-  public createUser = async (request: any) => {
-    return await this.authDAO.createUser(request);
-  };
-
   public signUp = async (request: any) => {
     return await this.authDAO.signUp(request);
   };

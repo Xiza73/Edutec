@@ -9,7 +9,8 @@ export class UserController {
   }
   
   public getUsers = async (req: Request, res: Response, next: NextFunction) => {
-    const response = await this.userService.getUsers();
+    const person = req.query.person as string;
+    const response = await this.userService.getUsers(person);
 
     if (response.statusCode === 200) return res.status(200).json(response);
     next(response);
@@ -41,7 +42,16 @@ export class UserController {
   };
   
   public deleteUser = async (req: Request, res: Response, next: NextFunction) => {
-    const response = await this.userService.deleteUser(req.body);
+    const { id } = req.params;
+    const response = await this.userService.deleteUser(id);
+
+    if (response.statusCode === 200) return res.status(200).json(response);
+    next(response);
+    return;
+  };
+
+  public updatePassword = async (req: Request, res: Response, next: NextFunction) => {
+    const response = await this.userService.updatePassword(req.body);
 
     if (response.statusCode === 200) return res.status(200).json(response);
     next(response);

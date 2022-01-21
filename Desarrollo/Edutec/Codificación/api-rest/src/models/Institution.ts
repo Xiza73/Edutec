@@ -13,7 +13,8 @@ export interface IInstitution extends Document {
         instagram: string
     },
     email: string,
-    logo: string
+    logo: string,
+    status: number
 }
 
 const Institution = new Schema({
@@ -61,6 +62,11 @@ const Institution = new Schema({
     logo: {
         type: String,
         required: false
+    },
+    status: {
+        type: Number,
+        required: false,
+        default: 1,
     }
 }, { timestamps: true });
 

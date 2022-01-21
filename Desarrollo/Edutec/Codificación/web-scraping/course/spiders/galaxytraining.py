@@ -32,6 +32,7 @@ class GalaxytrainingSpider(scrapy.Spider):
         item['duration'] = response.xpath("//div/div/p/span[text()='watch_later']/../text()").get(default='')
         item['schedule'] = (schedule[15].upper() + schedule[16:])
         item['url'] = response.request.meta['url']
+        item['status'] = 1
 
         yield item
 

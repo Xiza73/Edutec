@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AdminService } from 'src/app/data/services/admin.service';
 import { ClientService } from 'src/app/data/services/client.service';
@@ -15,29 +15,25 @@ export class DataSharingService {
   constructor(
     private tokenService: TokenService,
     private clientService: ClientService,
-    private adminService: AdminService,
-    private roleService: RoleService
+    private adminService: AdminService
   ) { 
     if (this.tokenService.isValidToken() && this.tokenService.getIdFromToken()) {
-      const rolId = this.tokenService.getRoleIdFromToken()!;
+      const role = this.tokenService.getRoleFromToken()!;
       const id = this.tokenService.getIdFromToken()!;
+      let obs$: Observable<any>
 
-      this.roleService.readRole(rolId)
-        .pipe(
-          switchMap(response => {
-            const role = response.data.description;
-            if (role === 'client') {
-              return this.clientService.getUserProfile(id);
-            }
-            return this.adminService.getUserProfile(id);
-          })
-        )
-        .subscribe(
-          response => {
-            const { username } = response.body.data;
-            this.username.next(username);
-          }
-        );
+      if (role === 'client') {
+        obs$ = this.clientService.getUserProfile(id);
+      } else {
+        obs$ = this.adminService.getUserProfile(id);
+      }
+
+      obs$.subscribe(
+        response => {
+          const { username } = response.body.data;
+          this.username.next(username);
+        }
+      );
     }
   }
 }

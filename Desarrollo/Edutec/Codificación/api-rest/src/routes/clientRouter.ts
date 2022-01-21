@@ -16,6 +16,7 @@ export class ClientRouter {
   }
 
   private _configure(): void {
+    this._router.get('/', this._controller.readClients);
     this._router.get('/profile', this._controller.getUserProfile);
     this._router.get('/profile/id/', this._controller.getUserProfileId);
     this._router.put('/profile/:id', this._controller.updateUserProfile);

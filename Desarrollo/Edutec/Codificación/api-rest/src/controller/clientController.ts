@@ -52,6 +52,14 @@ export class ClientController {
     return;
   };
 
+  public readClients = async (req: Request, res: Response, next: NextFunction) => {
+    const response = await this.clientService.readClients();
+
+    if (response.statusCode === 200) return res.status(200).json(response);
+    next(response);
+    return;
+  };
+
   public addFavorite = async (req: Request, res: Response, next: NextFunction) => {
     const response = await this.clientService.addFavorite(req.body);
 

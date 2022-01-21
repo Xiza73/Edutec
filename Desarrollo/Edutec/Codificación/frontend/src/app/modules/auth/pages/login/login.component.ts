@@ -10,7 +10,6 @@ import { TokenService } from 'src/app/core/services/token.service';
 import { AdminService } from 'src/app/data/services/admin.service';
 import { ClientService } from 'src/app/data/services/client.service';
 import { RoleService } from 'src/app/data/services/role.service';
-import { User } from 'src/app/data/types/user';
 
 @Component({
   selector: 'app-login',
@@ -41,7 +40,6 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService,
     private dataSharingService: DataSharingService,
     private clientService: ClientService,
-    private roleService: RoleService,
     private adminService: AdminService
   ) { }
 
@@ -55,7 +53,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    const user: User = this.form.value;
+    const user: any = this.form.value;
 
     this.submitButton.nativeElement.disabled = true;
     this.authService.login(user)
@@ -65,13 +63,7 @@ export class LoginComponent implements OnInit {
           this.tokenService.setToken(response.token);
         }),
         switchMap(() => {
-          const roleId = this.tokenService.getRoleIdFromToken();
-          return this.roleService.readRole(roleId!);
-        }),
-        tap(response => {
-          this.role = response.data.description;
-        }),
-        switchMap(() => {
+          this.role = this.tokenService.getRoleFromToken()!;
           const id = this.tokenService.getIdFromToken()!;
           if (this.role === 'client') {
             return this.clientService.getUserProfile(id);

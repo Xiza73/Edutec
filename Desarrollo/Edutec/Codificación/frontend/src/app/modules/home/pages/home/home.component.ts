@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
     this.courseService.readCourses('', 'start', '-1')
       .subscribe(
         response => {
+          this.courses = response.data;
           this.courses = response.data.slice(0, 4);
         },
         err => {

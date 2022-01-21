@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserLoggedInGuard } from './core/guards/user-logged-in.guard';
+import { UserRoleGuard } from './core/guards/user-role.guard';
 import { AdminLayoutComponent } from './layout/layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layout/layouts/auth-layout/auth-layout.component';
 import { ContentLayoutComponent } from './layout/layouts/content-layout/content-layout.component';
@@ -8,6 +9,7 @@ import { ContentLayoutComponent } from './layout/layouts/content-layout/content-
 const routes: Routes = [
   {
     path: '',
+    canActivate: [ UserRoleGuard ], 
     component: ContentLayoutComponent,
     children: [
       {
@@ -37,6 +39,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
+    canActivate: [ UserRoleGuard ],
     component: AdminLayoutComponent,
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
   },
