@@ -2,6 +2,10 @@
 
 Búsqueda de Cursos con Web Scraping
 
+## 🎓 UNMSM
+- **Curso:** Gestión de Configuración y Mantenimiento
+- **Docente:** Salazar Mariños, Luis Alberto
+
 ## 👥 Integrantes
 - Fajardo Astete, Manuel Alexandro 17200107
 - Gonzales Orosco, Jhon Anderson 17200276
