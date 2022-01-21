@@ -14,7 +14,7 @@ import { User } from 'src/app/data/types/user';
 export class CreateEditUserComponent implements OnInit {
 
   form: FormGroup = this.fb.group({
-    name       : ['', [ Validators.required, Validators.maxLength(50), Validators.pattern("[A-Za-záéíóúÁÉÍÓÚ'´ ]+") ]],
+    name       : ['', [ Validators.required, Validators.maxLength(50), Validators.pattern("[A-Za-záéíóúüñÁÉÍÓÚÜÑ'´ ]+") ]],
     username   : ['', [ Validators.required, Validators.maxLength(50), Validators.pattern("[A-Za-z0-9]+") ]],
     email      : ['', [ Validators.required, Validators.email ]],
     password   : ['', [ Validators.required, Validators.minLength(3) ]],
